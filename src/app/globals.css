@@ -5,10 +5,30 @@
 .customSection{
     min-height: calc(100dvh - 105px);
 }
+/* 
+ input[type="date"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
 
-input[type="date"]{
-    visibility: hidden;
-    pointer-events: auto;
+    &::part,
+    &::placeholder{
+        background-color: transparent;
+        color: transparent;
+    }
+} */
+
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-year-field:focus {
+    background-color: transparent;
+    color: transparent;
+}
+
+input[type="date"]::selection{
+    color: transparent;
+    background-color: transparent;
 }
 
 .cardMenuCover{
