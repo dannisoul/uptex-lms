@@ -56,7 +56,7 @@ function getPreview (file) {
   } else if (file.mimeType === 'application/msword' || file.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
     return (
       <DocViewer
-        documents={[{ uri: 'http://localhost:3000' + file.ruta, fileName: file.nombre }]}
+        documents={[{ uri: process.env.PUBLIC_URL + file.ruta, fileName: file.nombre }]}
         pluginRenderers={DocViewerRenderers}
         className='h-[500px] w-[500px]'
         style={{ width: '90%', height: '85%' }}
@@ -65,7 +65,7 @@ function getPreview (file) {
   } else if (file.mimeType === 'application/vnd.ms-powerpoint' || file.mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
     return (
       <DocViewer
-        documents={[{ uri: 'http://localhost:3000' + file.ruta, fileName: file.nombre }]}
+        documents={[{ uri: process.env.PUBLIC_URL + file.ruta, fileName: file.nombre }]}
         pluginRenderers={DocViewerRenderers}
         className='h-[500px] w-[500px]'
         style={{ width: '90%', height: '85%' }}
@@ -74,7 +74,7 @@ function getPreview (file) {
   } else if (file.mimeType === 'application/vnd.ms-excel' || file.mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
     return (
       <DocViewer
-        documents={[{ uri: 'http://localhost:3000' + file.ruta, fileName: file.nombre }]}
+        documents={[{ uri: process.env.PUBLIC_URL + file.ruta, fileName: file.nombre }]}
         pluginRenderers={DocViewerRenderers}
         className='h-[500px] w-[500px]'
         style={{ width: '90%', height: '85%' }}
@@ -83,7 +83,7 @@ function getPreview (file) {
   } else if (file.mimeType === 'plain/text' || file.mimeType) {
     return (
       <DocViewer
-        documents={[{ uri: 'http://localhost:3000' + file.ruta, fileName: file.nombre }]}
+        documents={[{ uri: process.env.PUBLIC_URL + file.ruta, fileName: file.nombre }]}
         pluginRenderers={DocViewerRenderers}
         className='h-[500px] w-[500px]'
         style={{ width: '90%', height: '85%' }}

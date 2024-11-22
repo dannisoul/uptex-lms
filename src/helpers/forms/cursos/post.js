@@ -28,7 +28,7 @@ export async function post (
 
     // con el id del curso crea la carpeta y guarda la imagen del curso
     const fileResponse = await fetch(
-      'http://localhost:3000/api/cursos/images',
+      `${process.env.PUBLIC_URL}/api/cursos/images`,
       {
         method: 'POST',
         body: newFormData

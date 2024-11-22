@@ -21,7 +21,7 @@ export async function post (
     newFormData.append('mimetype', formData.recurso.type)
 
     // solicita guardar el recurso en el servidor
-    const fileResponse = await fetch('http://localhost:3000/api/recursos', {
+    const fileResponse = await fetch(`${process.env.PUBLIC_URL}/api/recursos`, {
       method: 'POST',
       body: newFormData
     })
