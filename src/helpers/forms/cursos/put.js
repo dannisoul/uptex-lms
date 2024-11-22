@@ -42,7 +42,7 @@ export async function put (
       newFormData.append('fileToRemove', initialState.imagen)
       newFormData.append('idCurso', idCurso)
       const fileResponse = await fetch(
-        'http://localhost:3000/api/cursos/images',
+        `${process.env.PUBLIC_URL}/api/cursos/images`,
         {
           method: 'PUT',
           body: newFormData
