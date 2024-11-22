@@ -1,0 +1,6 @@
+[
+    {"label": "Principiante", "name": "idNivel", "peer": "peer/principiante", "value": "1", "className": "peer-checked/principiante:bg-primary-accent rounded-lg peer-checked/principiante:text-white"},
+    {"label": "Intermedio", "name": "idNivel", "peer": "peer/intermedio", "value": "2", "className": "peer-checked/intermedio:bg-primary-accent rounded-lg peer-checked/intermedio:text-white"},
+    {"label": "Avanzado", "name": "idNivel", "peer": "peer/avanzado", "value": "3", "className": "peer-checked/avanzado:bg-primary-accent rounded-lg peer-checked/avanzado:text-white"}
+  ]
+  

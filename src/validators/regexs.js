@@ -1,0 +1,14 @@
+export const SPECIAL_CHARS_AND_NUMBERS = /[\\/*\-+.,{}[\]^!|°@#$%&/()=?¡¿'"_\d]/
+export const SPECIAL_CHARS = /[\\/*\-+.,{}[\]^!|°@#$%&/()=?¡¿'"_]/
+export const DIRECCION = /[\\/*+{}[\]^!|°@$%&/()=?¡¿_]/
+export const TELEFONO = /^(\+\d{1,3})?[0-9]{10}$/
+export const NACIONALIDAD = /^(?:[1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-2][0-9]|23[0-2])$/
+export const EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+export const PASSWORD = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\\/*\-+.,{}[\]^!|°@#$%&/()=?¡¿'"_])[\w\\/*\-+.,{}[\]^!|°@#$%&/()=?¡¿'"_]{8,50}$/
+export const DATE = /^\d{4,4}-\d{2,2}-\d{2,2}/
+export const ROL = /^[123]$/
+export const CATEGORIA = /^\d{1,3}$/
+export const NIVEL = /^[123]$/
+export const UNIDADES = /^([1-9]|[1-9][0-9])$/
+export const TEMAS = /^(?!0\d)(?:\d+(?:\.\d{1,2}){0,4})?$/
+export const CURSO = /^\d+$/

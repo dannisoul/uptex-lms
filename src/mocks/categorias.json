@@ -1,0 +1,11 @@
+[
+    {"label": "Desarrollo Tecnológico", "name": "idCategoria", "peer": "peer/desarrollo", "value": "1", "className": "peer-checked/desarrollo:bg-primary-accent peer-checked/desarrollo:text-white"},
+    {"label": "Diseño y Creatividad", "name": "idCategoria", "peer": "peer/diseno-categoria", "value": "2", "className": "peer-checked/diseno-categoria:bg-primary-accent peer-checked/diseno-categoria:text-white"},
+    {"label": "Negocios y Emprendimiento", "name": "idCategoria", "peer": "peer/negocios-emprendimiento", "value": "3", "className": "peer-checked/negocios-emprendimiento:bg-primary-accent peer-checked/negocios-emprendimiento:text-white"},
+    {"label": "Ciencias y Salud", "name": "idCategoria", "peer": "peer/ciencias-salud", "value": "4", "className": "peer-checked/ciencias-salud:bg-primary-accent peer-checked/ciencias-salud:text-white"},
+    {"label": "Idiomas y Comunicación", "name": "idCategoria", "peer": "peer/idiomas-comunicacion", "value": "5", "className": "peer-checked/idiomas-comunicacion:bg-primary-accent peer-checked/idiomas-comunicacion:text-white"},
+    {"label": "Arte y Humanidades", "name": "idCategoria", "peer": "peer/arte-humanidades", "value": "6", "className": "peer-checked/arte-humanidades:bg-primary-accent peer-checked/arte-humanidades:text-white"},
+    {"label": "Estilo de Vida y Bienestar", "name": "idCategoria", "peer": "peer/estilo-vida-bienestar", "value": "7", "className": "peer-checked/estilo-vida-bienestar:bg-primary-accent peer-checked/estilo-vida-bienestar:text-white"},
+    {"label": "Tecnologías Emergentes", "name": "idCategoria", "peer": "peer/tecnologias-emergentes", "value": "8", "className": "peer-checked/tecnologias-emergentes:bg-primary-accent peer-checked/tecnologias-emergentes:text-white"}
+  ]
+  

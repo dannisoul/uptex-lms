@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.customSection{
+    min-height: calc(100dvh - 105px);
+}
+
+input[type="date"]{
+    visibility: hidden;
+    pointer-events: auto;
+}
+
+.cardMenuCover{
+    border-radius: 65% 26% 25% 26% / 54% 26% 0% 0%;
+    min-height: 150px;
+}
+
+.cardContainer {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
+
+body{
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: auto;
+}

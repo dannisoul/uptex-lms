@@ -1,0 +1,5 @@
+[
+    {"label": "Interno", "name": "esCursoInterno", "peer": "peer/interno", "value": "0", "className": "peer-checked/interno:bg-primary-accent rounded-lg peer-checked/interno:text-white"},
+    {"label": "Externo", "name": "esCursoInterno", "peer": "peer/externo", "value": "1", "className": "peer-checked/externo:bg-primary-accent rounded-lg peer-checked/externo:text-white"}
+  ]
+  
