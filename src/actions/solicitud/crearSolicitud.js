@@ -1,10 +1,11 @@
 'use server'
-import { Curso } from '@/models/Curso'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-export async function cursosPorDocente (idUsuario) {
+import { Solicitud } from '@/models/Solicitud'
+export async function crearSolicitud (data) {
   const session = await getServerSession(authOptions)
   if (!session) return { error: true, description: 'Credenciales no válidas' }
-  const response = await Curso.cursosPorDocente(idUsuario)
+  console.log(data, session.user.idUsuario)
+  const response = await Solicitud.crearSolicitud(session.user.idUsuario, data.codigo)
   return response
 }

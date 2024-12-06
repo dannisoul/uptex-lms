@@ -1,4 +1,4 @@
-import { crearTema } from '@/actions/tema/crear'
+import { crearTema } from '@/actions/tema/crearTema'
 export async function post (formData, idUnidad, setPending, handleModal, toast, updateTemas) {
   try {
     setPending(true)

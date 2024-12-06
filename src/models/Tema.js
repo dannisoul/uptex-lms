@@ -2,14 +2,6 @@ import { getConnection } from '@/db/connection'
 import { dynamicQuery } from '@/helpers/models/dynamicQuery'
 
 export class Tema {
-  constructor (idTema, np, nombre, descripcion, idUnidad) {
-    this.idTema = idTema
-    this.np = np
-    this.nombre = nombre
-    this.descripcion = descripcion
-    this.idUnidad = idUnidad
-  }
-
   static async crearTema (np, nombre, descripcion, idUnidad) {
     let connection = null
     try {
@@ -84,7 +76,7 @@ export class Tema {
     }
   }
 
-  static async temaPorAlumno (idTema, idUsuario) {
+  static async temaPorIdParaAlumno (idTema, idUsuario) {
     let connection = null
     try {
       connection = await getConnection()

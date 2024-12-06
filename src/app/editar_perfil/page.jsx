@@ -1,10 +1,10 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { Toast, showToast } from '@/app/components/shared/Toaster'
-import { obtenerEspecialidades } from '@/actions/especialidad/obtenerEspecialidades'
-import { obtenerHabilidades } from '@/actions/habilidad/obtenerHabilidades'
-import { obtenerHabilidadesPorUsuario } from '@/actions/habilidad/obtenerHabilidadesPorUsuario'
-import { obtenerUsuario } from '@/actions/usuario/obtenerUsuario'
+import { obtenerEspecialidadesLista } from '@/actions/especialidad/obtenerEspecialidadesLista'
+import { obtenerHabilidadesLista } from '@/actions/habilidad/obtenerHabilidadesLista'
+import { obtenerHabilidadesPorDocente } from '@/actions/habilidad/obtenerHabilidadesPorDocente'
+import { usuarioPorId } from '@/actions/usuario/usuarioPorId'
 import { EditarPerfilDocente } from '../components/perfil/EditarPerfilDocente'
 import { EditarPerfilAlumno } from '../components/perfil/EditarPerfilAlumno'
 export default async function Tema () {
@@ -43,12 +43,12 @@ async function getData (user) {
       return null
     }
     case 2: {
-      const promises = [obtenerEspecialidades(), obtenerHabilidades(), obtenerHabilidadesPorUsuario(user.idUsuario), obtenerUsuario(user.idUsuario)]
+      const promises = [obtenerEspecialidadesLista(), obtenerHabilidadesLista(), obtenerHabilidadesPorDocente(user.idUsuario), usuarioPorId(user.idUsuario)]
       const [{ especialidades = [] }, { habilidades = [] }, { misHabilidades = [] }, { usuario }] = await Promise.all(promises)
       return { especialidades, habilidades, misHabilidades, usuario }
     }
     case 3: {
-      const data = await obtenerUsuario(user.idUsuario)
+      const data = await usuarioPorId(user.idUsuario)
       return data
     }
   }

@@ -1,10 +1,10 @@
 'use server'
-import { Usuario } from '@/models/Usuario'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-export async function solicitudPorGrupo (idGrupo, page) {
+import { Grupo } from '@/models/Grupo'
+export async function inscribirAlumno (data) {
   const session = await getServerSession(authOptions)
   if (!session) return { error: true, description: 'Credenciales no válidas' }
-  const response = await Usuario.solicitudPorGrupo(idGrupo, page)
+  const response = await Grupo.inscribirAlumno(session.user.idUsuario, data.codigo)
   return response
 }

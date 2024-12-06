@@ -5,7 +5,7 @@ import { temaPorId } from '@/actions/tema/temaPorId'
 import { Toast, showToast } from '@/app/components/shared/Toaster'
 import { recursosPorTema } from '@/actions/recursos/recursosPorTema'
 import { TemaAlumno } from '@/app/components/tema/TemaAlumno'
-import { temaPorAlumno } from '@/actions/tema/temaPorAlumno'
+import { temaPorIdParaAlumno } from '@/actions/tema/temaPorIdParaAlumno'
 import { NotFound } from '@/app/components/shared/NotFound'
 export default async function Tema ({ params }) {
   const idTema = params.id
@@ -66,7 +66,7 @@ async function getData (rol, idTema) {
       return { tema, recursos }
     }
     case 3: {
-      const { tema } = await temaPorAlumno(idTema)
+      const { tema } = await temaPorIdParaAlumno(idTema)
       if (!tema) return { tema }
       const { recursos } = await recursosPorTema(idTema)
       return { tema, recursos }

@@ -1,4 +1,4 @@
-import { actualizarUnidad } from '@/actions/unidad/actualizar'
+import { actualizarUnidad } from '@/actions/unidad/actualizarUnidad'
 export async function put (formData, idUnidad, setPending, handleModal, toast, updateUnidades, initialState) {
   const changedData = {}
   Object.entries(formData).forEach(([key, value]) => {

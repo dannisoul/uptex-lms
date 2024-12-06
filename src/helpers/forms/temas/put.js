@@ -1,4 +1,4 @@
-import { actualizarTema } from '@/actions/tema/actualizar'
+import { actualizarTema } from '@/actions/tema/actualizarTema'
 export async function put (formData, idTema, setPending, handleModal, toast, updateTemas, initialState) {
   console.log(idTema)
   const changedData = {}

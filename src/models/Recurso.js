@@ -1,14 +1,6 @@
 import { getConnection } from '@/db/connection'
 
 export class Recurso {
-  constructor (idRecurso, nombre, ruta, mimetype, idTema) {
-    this.idRecurso = idRecurso
-    this.nombre = nombre
-    this.ruta = ruta
-    this.mimetype = mimetype
-    this.idTema = idTema
-  }
-
   static async crearRecurso (nombre, ruta, mimetype, idTema) {
     let connection = null
     try {

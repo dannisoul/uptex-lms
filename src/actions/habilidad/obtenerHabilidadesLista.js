@@ -1,10 +1,10 @@
 'use server'
-import { Usuario } from '@/models/Usuario'
+import { Habilidad } from '@/models/Habilidad'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-export async function obtenerUsuario (idUsuario) {
+export async function obtenerHabilidadesLista () {
   const session = await getServerSession(authOptions)
   if (!session) return { error: true, description: 'Credenciales no válidas' }
-  const response = await Usuario.obtenerUsuario(idUsuario)
+  const response = await Habilidad.obtenerHabilidadesLista()
   return response
 }

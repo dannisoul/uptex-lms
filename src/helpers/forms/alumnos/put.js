@@ -23,7 +23,7 @@ export async function put (prevFormData, formData, toast, updatePrevFormData, se
 
     if (hasAvatarChange) {
       newFormData.append('fileToRemove', oldData.avatar)
-      const fileResponse = await fetch(`${process.env.PUBLIC_URL}/api/usuarios/images`, {
+      const fileResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usuarios/images`, {
         method: 'POST',
         body: newFormData
       })

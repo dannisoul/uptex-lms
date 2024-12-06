@@ -1,4 +1,4 @@
-import { crearUnidad } from '@/actions/unidad/crear'
+import { crearUnidad } from '@/actions/unidad/crearUnidad'
 export async function post (formData, idCurso, setPending, handleModal, toast, updateUnidades) {
   try {
     setPending(true)

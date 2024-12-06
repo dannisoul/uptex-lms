@@ -1,4 +1,4 @@
-import { solicitudPorGrupo } from '@/actions/usuario/solicitudPorGrupo'
+import { solicitudesPorGrupoConPaginacion } from '@/actions/solicitud/solicitudesPorGrupoConPaginacion'
 import { useEffect, useState } from 'react'
 export default function usePaginacionSolicitudes ({ solicitudes, updateSolicitudes, idGrupo }) {
   const [page, setPage] = useState(1)
@@ -11,7 +11,7 @@ export default function usePaginacionSolicitudes ({ solicitudes, updateSolicitud
 
   useEffect(() => {
     setLoading(true)
-    solicitudPorGrupo(idGrupo, page)
+    solicitudesPorGrupoConPaginacion(idGrupo, page)
       .then(res => {
         setTotalPage(res.totalPages)
         updateSolicitudes({ type: 'update', payload: res.solicitudes })

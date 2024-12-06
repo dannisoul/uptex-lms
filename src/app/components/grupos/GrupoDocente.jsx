@@ -2,7 +2,7 @@
 import { PageOptions } from '../shared/PageOptions'
 import { useModal } from '@/hooks/useModal'
 import { Eliminar } from '../modals/Eliminar'
-import { eliminarGrupo } from '@/actions/grupos/eliminar'
+import { eliminarGrupo } from '@/actions/grupos/eliminarGrupo'
 import { Grupo } from '../modals/Grupo'
 import { useState } from 'react'
 import { UnidadesGrid } from '../unidades/UnidadesGrid'

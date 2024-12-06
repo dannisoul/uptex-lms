@@ -1,4 +1,4 @@
-import { actualizarGrupo } from '@/actions/grupos/actualizar'
+import { actualizarGrupo } from '@/actions/grupos/actualizarGrupo'
 export async function put (formData, idGrupo, setPending, handleModal, toast, updateGrupos, initialState) {
   const newData = { ...formData, idCurso: formData.idCurso.value }
   const oldData = { ...initialState, idCurso: formData.idCurso.value }

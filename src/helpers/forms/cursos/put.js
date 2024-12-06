@@ -1,4 +1,4 @@
-import { actualizarCurso } from '@/actions/curso/actualizar'
+import { actualizarCurso } from '@/actions/curso/actualizarCurso'
 export async function put (
   formData,
   idCurso,
@@ -42,7 +42,7 @@ export async function put (
       newFormData.append('fileToRemove', initialState.imagen)
       newFormData.append('idCurso', idCurso)
       const fileResponse = await fetch(
-        `${process.env.PUBLIC_URL}/api/cursos/images`,
+        `${process.env.NEXT_PUBLIC_URL}/api/cursos/images`,
         {
           method: 'PUT',
           body: newFormData

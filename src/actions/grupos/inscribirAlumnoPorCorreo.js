@@ -1,9 +1,9 @@
 'use server'
-import { Usuario } from '@/models/Usuario'
+import { Grupo } from '@/models/Grupo'
 import { revalidatePath } from 'next/cache'
 
 export async function inscribirAlumnoPorCorreo (correoAlumno, idGrupo) {
-  const response = await Usuario.inscribirAlumnoPorCorreo(correoAlumno, idGrupo)
+  const response = await Grupo.inscribirAlumnoPorCorreo(correoAlumno, idGrupo)
   if (!response.error) {
     revalidatePath('/mis_grupos/:id*')
   }

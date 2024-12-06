@@ -6,7 +6,7 @@ export class Especialidad {
     this.nombre = nombre
   }
 
-  static async obtenerEspecialidades () {
+  static async obtenerEspecialidadesLista () {
     let connection = null
     try {
       connection = await getConnection()

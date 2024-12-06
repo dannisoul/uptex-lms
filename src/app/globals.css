@@ -5,6 +5,7 @@
 .customSection{
     min-height: calc(100dvh - 105px);
 }
+
 /* 
  input[type="date"] {
     -webkit-appearance: none;
@@ -46,11 +47,10 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-input[type=number]{
+/* input[type=number]{
     -moz-appearance: textfield;
-}
+} */
 
-body{
-    scrollbar-color: rebeccapurple green;
-    scrollbar-width: auto;
+.scroll-hidden{
+    scrollbar-width: none;
 }

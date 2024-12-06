@@ -1,8 +1,8 @@
-import { mandarSolicitud } from '@/actions/usuario/mandarSolicitud'
+import { crearSolicitud } from '@/actions/solicitud/crearSolicitud'
 export async function post (formData, setPending, handleModal, toast) {
   try {
     setPending(true)
-    const response = await mandarSolicitud(formData)
+    const response = await crearSolicitud(formData)
     if (response.error) throw new Error(response.errorCode)
     handleModal()
     toast.success('Solicitud con éxito, espera a que el propietario del curso la acepte')

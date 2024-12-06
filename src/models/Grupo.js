@@ -3,15 +3,6 @@ import { dynamicFilter } from '@/helpers/models/dynamicFilters'
 import { dynamicQuery } from '@/helpers/models/dynamicQuery'
 
 export class Grupo {
-  constructor (idGrupo, nombre, codigo, inicio, cierre, idCurso) {
-    this.idGrupo = idGrupo
-    this.nombre = nombre
-    this.codigo = codigo
-    this.inicio = inicio
-    this.cierre = cierre
-    this.idCurso = idCurso
-  }
-
   static async crearGrupo (nombre, codigo, inicio, cierre, idCurso) {
     let connection = null
     try {
@@ -35,23 +26,42 @@ export class Grupo {
     }
   }
 
-  static async gruposPorAlumno (idAlumno) {
+  static async actualizarGrupo (idGrupo, ...fields) {
     let connection = null
     try {
       connection = await getConnection()
-      const sql = `SELECT c.*, g.idGrupo, g.nombre as grupo, g.codigo, g.inicio, g.cierre, docente.idUsuario as idDocente, docente.avatar
-      FROM curso c 
-      INNER JOIN grupo g ON c.idCurso = g.idCurso
-      INNER JOIN usuario docente ON c.idUsuario = docente.idUsuario
-      INNER JOIN inscripcion i ON g.idGrupo = i.idGrupo
-      INNER JOIN usuario alumno ON i.idUsuario = alumno.idUsuario
-      WHERE alumno.idUsuario = ?`
-      const values = [idAlumno]
-      const [cursos] = await connection.execute(sql, values)
-      return { error: false, errorCode: null, cursos }
+      const { sql, values } = dynamicQuery(fields, 'grupo', 'idGrupo', idGrupo)
+      console.log(sql)
+      const [result] = await connection.execute(sql, values)
+      const [grupo] = await connection.execute(`
+      select 
+        grupo.*, curso.nombre as nombrecurso, curso.descripcion, curso.imagen, usuario.idUsuario, usuario.avatar
+      from 
+        grupo, curso, usuario
+      where 
+        grupo.idCurso = curso.idCurso AND
+        curso.idUsuario = usuario.idUsuario AND
+        grupo.idGrupo = ?`, [idGrupo])
+      return { error: false, errorCode: null, affectedRows: result.affectedRows, editedRecord: grupo[0] }
     } catch (error) {
       console.log(error)
-      return { error: true, errorCode: error.code, cursos: null }
+      return { error: true, errorCode: error.code, affectedRows: 0, editedRecord: null }
+    } finally {
+      if (connection) connection.release()
+    }
+  }
+
+  static async eliminarGrupo (idGrupo) {
+    let connection = null
+    try {
+      connection = await getConnection()
+      const sql = 'DELETE FROM grupo WHERE idGrupo = ?'
+      const values = [idGrupo]
+      const [result] = await connection.execute(sql, values)
+      return { error: false, errorCode: null, affectedRows: result.affectedRows, deletedId: idGrupo }
+    } catch (error) {
+      console.log(error)
+      return { error: true, errorCode: error.code, affectedRows: 0, deletedId: 0 }
     } finally {
       if (connection) connection.release()
     }
@@ -87,38 +97,7 @@ export class Grupo {
     }
   }
 
-  static async grupoPorAlumno (idGrupo, idAlumno) {
-    let connection = null
-    try {
-      connection = await getConnection()
-      const sql = `SELECT c.*, g.idGrupo, CONCAT(d.nombre, ' ', d.paterno) as docente
-      FROM curso c 
-      INNER JOIN grupo g ON c.idCurso = g.idCurso
-      INNER JOIN inscripcion i ON g.idGrupo = i.idGrupo
-      INNER JOIN usuario u ON i.idUsuario = u.idUsuario
-      INNER JOIN usuario d ON c.idUsuario = d.idUsuario
-      WHERE g.idGrupo = ?
-      AND u.idUsuario = ?`
-      const sql2 = 'SELECT * FROM unidad WHERE idCurso = ?'
-      const sql3 = `SELECT t.*
-      FROM unidad u INNER JOIN tema t
-      ON u.idUnidad = t.idUnidad
-      WHERE u.idCurso = ?`
-      const values = [idGrupo, idAlumno]
-      const [grupo] = await connection.execute(sql, values)
-      console.log(grupo)
-      const [unidades] = await connection.execute(sql2, [grupo[0].idCurso])
-      const [temas] = await connection.execute(sql3, [grupo[0].idCurso])
-      return { error: false, errorCode: null, curso: grupo[0], unidades, temas }
-    } catch (error) {
-      console.log(error)
-      return { error: true, errorCode: error.code, curso: null, unidades: [], temas: [] }
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
-  static async grupoPorAlumno2 (idGrupo, idAlumno) {
+  static async grupoPorIdParaAlumno (idGrupo, idAlumno) {
     let connection = null
     try {
       connection = await getConnection()
@@ -194,51 +173,6 @@ export class Grupo {
     }
   }
 
-  static async cursosPorDocente (idUsuario) {
-    let connection = null
-    try {
-      connection = await getConnection()
-      const sql = `
-      SELECT 
-        curso.nombre as name, curso.idCurso as value
-      FROM
-        curso WHERE idUsuario = ? AND activo = 1`
-      const values = [idUsuario]
-      const [cursos] = await connection.execute(sql, values)
-      return { error: false, errorCode: null, cursos }
-    } catch (error) {
-      console.log(error)
-      return { error: true, errorCode: error.code, cursos: null }
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
-  static async gruposPorDocente (idUsuario) {
-    let connection = null
-    try {
-      connection = await getConnection()
-      const sql = `
-      select 
-        grupo.*, curso.nombre as nombrecurso, curso.descripcion, curso.imagen, usuario.idUsuario, usuario.avatar
-      from 
-        grupo, curso, usuario
-      where 
-        grupo.idCurso = curso.idCurso AND
-        curso.idUsuario = usuario.idUsuario AND usuario.idUsuario = ?
-        order by curso.nombre
-        `
-      const values = [idUsuario]
-      const [grupos] = await connection.execute(sql, values)
-      return { error: false, errorCode: null, grupos }
-    } catch (error) {
-      console.log(error)
-      return { error: true, errorCode: error.code, grupos: null }
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
   static async gruposPorDocenteConPaginacion (idUsuario, page = 1, query, items = 11) {
     let connection = null
     try {
@@ -284,63 +218,6 @@ export class Grupo {
     }
   }
 
-  static async eliminarGrupo (idGrupo) {
-    let connection = null
-    try {
-      connection = await getConnection()
-      const sql = 'DELETE FROM grupo WHERE idGrupo = ?'
-      const values = [idGrupo]
-      const [result] = await connection.execute(sql, values)
-      return { error: false, errorCode: null, affectedRows: result.affectedRows, deletedId: idGrupo }
-    } catch (error) {
-      console.log(error)
-      return { error: true, errorCode: error.code, affectedRows: 0, deletedId: 0 }
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
-  static async eliminarAlumno (idUsuario, idGrupo) {
-    let connection = null
-    try {
-      connection = await getConnection()
-      const sql = 'DELETE FROM inscripcion WHERE idUsuario = ? AND idGrupo = ?'
-      const values = [idUsuario, idGrupo]
-      const [result] = await connection.execute(sql, values)
-      return { error: false, errorCode: null, affectedRows: result.affectedRows, deletedId: idUsuario }
-    } catch (error) {
-      console.log(error)
-      return { error: true, errorCode: error.code, affectedRows: 0, deletedId: 0 }
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
-  static async actualizarGrupo (idGrupo, ...fields) {
-    let connection = null
-    try {
-      connection = await getConnection()
-      const { sql, values } = dynamicQuery(fields, 'grupo', 'idGrupo', idGrupo)
-      console.log(sql)
-      const [result] = await connection.execute(sql, values)
-      const [grupo] = await connection.execute(`
-      select 
-        grupo.*, curso.nombre as nombrecurso, curso.descripcion, curso.imagen, usuario.idUsuario, usuario.avatar
-      from 
-        grupo, curso, usuario
-      where 
-        grupo.idCurso = curso.idCurso AND
-        curso.idUsuario = usuario.idUsuario AND
-        grupo.idGrupo = ?`, [idGrupo])
-      return { error: false, errorCode: null, affectedRows: result.affectedRows, editedRecord: grupo[0] }
-    } catch (error) {
-      console.log(error)
-      return { error: true, errorCode: error.code, affectedRows: 0, editedRecord: null }
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
   static async obtenerAlumnosPorGrupo (idGrupo, page = 1, limit = 5) {
     let connection = null
     try {
@@ -364,6 +241,75 @@ export class Grupo {
     } catch (error) {
       console.log(error)
       return { error: true, errorCode: error.code, alumnos: null }
+    } finally {
+      if (connection) connection.release()
+    }
+  }
+
+  static async eliminarAlumno (idUsuario, idGrupo) {
+    let connection = null
+    try {
+      connection = await getConnection()
+      const sql = 'DELETE FROM inscripcion WHERE idUsuario = ? AND idGrupo = ?'
+      const values = [idUsuario, idGrupo]
+      const [result] = await connection.execute(sql, values)
+      return { error: false, errorCode: null, affectedRows: result.affectedRows, deletedId: idUsuario }
+    } catch (error) {
+      console.log(error)
+      return { error: true, errorCode: error.code, affectedRows: 0, deletedId: 0 }
+    } finally {
+      if (connection) connection.release()
+    }
+  }
+
+  static async inscribirAlumno (idAlumno, codigo) {
+    console.log('datos', idAlumno, codigo)
+    let connection = null
+    try {
+      connection = await getConnection()
+      const sql = 'SELECT * FROM grupo WHERE codigo = ?'
+      const values = [codigo]
+      const [result] = await connection.execute(sql, values)
+      console.log(result)
+      if (result.length === 0) return { error: true, errorCode: 'NOT_FOUND', grupo: null }
+      await connection.execute('INSERT INTO inscripcion (idGrupo, idUsuario) VALUES (?, ?)', [result[0].idGrupo, idAlumno])
+      const [grupo] = await connection.execute(`
+      SELECT c.*, g.idGrupo, g.nombre as grupo, g.codigo, g.inicio, g.cierre, docente.idUsuario, docente.avatar
+      FROM curso c 
+      INNER JOIN grupo g ON c.idCurso = g.idCurso
+      INNER JOIN usuario docente ON c.idUsuario = docente.idUsuario
+      WHERE g.idGrupo = ?`, [result[0].idGrupo])
+      return { error: false, errorCode: null, newGrupo: grupo[0] }
+    } catch (error) {
+      console.log(error)
+      return { error: true, errorCode: error.code, result: null }
+    } finally {
+      if (connection) connection.release()
+    }
+  }
+
+  static async inscribirAlumnoPorCorreo (correo, idGrupo) {
+    let connection = null
+    try {
+      connection = await getConnection()
+      await connection.beginTransaction()
+      const sqlCorreo = 'select * from usuario where correo = ? AND idRol = 3'
+      const sqlVerify = 'select * from solicitud where idGrupo = ? AND idUsuario = ?'
+      const sqlInsert = 'INSERT INTO inscripcion (idGrupo, idUsuario) VALUES (?, ?)'
+      const [alumno] = await connection.execute(sqlCorreo, [correo])
+      if (alumno.length === 0) return { error: true, errorCode: 'NOT_FOUND', insertId: null, newAlumno: null }
+      const [existe] = await connection.execute(sqlVerify, [idGrupo, alumno[0].idUsuario])
+      if (existe.length !== 0) {
+        const sqlDelete = 'DELETE FROM solicitud WHERE idGrupo = ? AND idUsuario = ?'
+        await connection.execute(sqlDelete, [idGrupo, alumno[0].idUsuario])
+      }
+      const [result] = await connection.execute(sqlInsert, [idGrupo, alumno[0].idUsuario])
+      await connection.commit()
+      return { error: false, errorCode: null, insertId: result.insertId, newAlumno: alumno[0] }
+    } catch (error) {
+      if (connection) await connection.rollback()
+      console.log(error)
+      return { error: true, errorCode: error.code, insertId: -1, newAlumno: null }
     } finally {
       if (connection) connection.release()
     }

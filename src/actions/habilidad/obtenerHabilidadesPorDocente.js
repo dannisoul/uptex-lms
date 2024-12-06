@@ -1,10 +1,10 @@
 'use server'
-import { Grupo } from '@/models/Grupo'
+import { Habilidad } from '@/models/Habilidad'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-export async function grupoPorAlumno (idGrupo, idUsuario) {
+export async function obtenerHabilidadesPorDocente (idUsuario) {
   const session = await getServerSession(authOptions)
   if (!session) return { error: true, description: 'Credenciales no válidas' }
-  const response = await Grupo.grupoPorAlumno2(idGrupo, idUsuario)
+  const response = await Habilidad.obtenerHabilidadesPorDocente(idUsuario)
   return response
 }

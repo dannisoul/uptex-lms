@@ -1,4 +1,4 @@
-import { crearCurso } from '@/actions/curso/crear'
+import { crearCurso } from '@/actions/curso/crearCurso'
 import { registrarImagen } from '@/actions/curso/registrarImagen'
 export async function post (
   formData,
@@ -28,7 +28,7 @@ export async function post (
 
     // con el id del curso crea la carpeta y guarda la imagen del curso
     const fileResponse = await fetch(
-      `${process.env.PUBLIC_URL}/api/cursos/images`,
+      `${process.env.NEXT_PUBLIC_URL}/api/cursos/images`,
       {
         method: 'POST',
         body: newFormData

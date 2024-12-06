@@ -1,4 +1,4 @@
-import { crearGrupo } from '@/actions/grupos/crear'
+import { crearGrupo } from '@/actions/grupos/crearGrupo'
 export async function post (formData, setPending, handleModal, toast, updateGrupos) {
   console.log(formData)
   try {

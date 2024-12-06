@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth'
 import { Toast, showToast } from '@/app/components/shared/Toaster'
 import { unidadesPorCurso } from '@/actions/unidad/unidadesPorCurso'
 import { CursoAlumno } from '@/app/components/cursos/CursoAlumno'
-import { grupoPorAlumno } from '@/actions/grupos/grupoPorAlumno'
+import { grupoPorIdParaAlumno } from '@/actions/grupos/grupoPorIdParaAlumno'
 import { CursoPreview } from '@/app/components/cursos/CursoPreview'
 import { gruposRelacionados } from '@/actions/grupos/gruposRelacionados'
 import { NotFound } from '@/app/components/shared/NotFound'
@@ -96,7 +96,7 @@ async function getData (user, rol, idCurso) {
       return { curso, unidades, temas }
     }
     case 3: {
-      const { curso, unidades, temas, inscrito } = await grupoPorAlumno(
+      const { curso, unidades, temas, inscrito } = await grupoPorIdParaAlumno(
         idCurso,
         user.idUsuario
       )

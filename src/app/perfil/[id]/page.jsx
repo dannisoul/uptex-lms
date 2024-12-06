@@ -1,10 +1,10 @@
-import { obtenerHabilidadesPorUsuario } from '@/actions/habilidad/obtenerHabilidadesPorUsuario'
-import { obtenerUsuario } from '@/actions/usuario/obtenerUsuario'
+import { obtenerHabilidadesPorDocente } from '@/actions/habilidad/obtenerHabilidadesPorDocente'
+import { usuarioPorId } from '@/actions/usuario/usuarioPorId'
 import { PerfilAlumno } from '@/app/components/perfil/PerfilAlumno'
 import { PerfilDocente } from '@/app/components/perfil/PerfilDocente'
 
 export default async function Perfil ({ params }) {
-  const { usuario } = await obtenerUsuario(params.id)
+  const { usuario } = await usuarioPorId(params.id)
   const data = await getData(usuario.idRol, usuario.idUsuario)
   const page = getPage(usuario.idRol, { ...data, usuario })
   return (
@@ -36,7 +36,7 @@ async function getData (rol, idUsuario) {
       return null
     }
     case 2: {
-      const { misHabilidades } = await obtenerHabilidadesPorUsuario(idUsuario)
+      const { misHabilidades } = await obtenerHabilidadesPorDocente(idUsuario)
       return { misHabilidades }
     }
     case 3: {

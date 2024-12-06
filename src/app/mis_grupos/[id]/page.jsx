@@ -2,7 +2,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { Toast, showToast } from '@/app/components/shared/Toaster'
 import { grupoPorId } from '@/actions/grupos/grupoPorId'
-import { cursosPorDocente } from '@/actions/grupos/cursoPorDocente'
+import { cursosPorDocenteLista } from '@/actions/curso/cursosPorDocenteLista'
 import { unidadesPorCurso } from '@/actions/unidad/unidadesPorCurso'
 import { GrupoDocente } from '@/app/components/grupos/GrupoDocente'
 import { NotFound } from '@/app/components/shared/NotFound'
@@ -58,7 +58,7 @@ function getPage (rol, showToast, data) {
 async function getData (idGrupo, idUsuario) {
   const { grupo } = await grupoPorId(idGrupo, idUsuario)
   if (!grupo) return { grupo }
-  const { cursos } = await cursosPorDocente(idUsuario)
+  const { cursos } = await cursosPorDocenteLista(idUsuario)
   const { unidades = [], temas = [] } = await unidadesPorCurso(grupo.idCurso)
 
   return { grupo, cursos, unidades, temas }

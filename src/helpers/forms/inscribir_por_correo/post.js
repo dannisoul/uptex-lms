@@ -1,4 +1,4 @@
-import { inscribirAlumnoPorCorreo } from '@/actions/usuario/inscribirAlumnoPorCorreo'
+import { inscribirAlumnoPorCorreo } from '@/actions/grupos/inscribirAlumnoPorCorreo'
 
 export async function post (correoAlumno, toast, updateAlumnos, idGrupo, setCorreoAlumno) {
   try {

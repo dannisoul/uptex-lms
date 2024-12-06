@@ -10,8 +10,8 @@ import { UnidadesGrid } from '../unidades/UnidadesGrid'
 import { PageOptions } from '../shared/PageOptions'
 import { Curso } from '../modals/Curso'
 import { Eliminar } from '../modals/Eliminar'
-import { eliminarUnidad } from '@/actions/unidad/eliminar'
-import { eliminarTema } from '@/actions/tema/eliminar'
+import { eliminarUnidad } from '@/actions/unidad/eliminarUnidad'
+import { eliminarTema } from '@/actions/tema/eliminarTema'
 import { desactivarCurso } from '@/actions/curso/desactivarCurso'
 
 export function CursoDocente ({ initialCurso, toast, initialUnidades, initialTemas }) {

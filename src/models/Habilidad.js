@@ -6,7 +6,7 @@ export class Habilidad {
     this.nombre = nombre
   }
 
-  static async obtenerHabilidades () {
+  static async obtenerHabilidadesLista () {
     let connection = null
     try {
       connection = await getConnection()
@@ -23,7 +23,7 @@ export class Habilidad {
     }
   }
 
-  static async obtenerHabilidadesPorUsuario (idUsuario) {
+  static async obtenerHabilidadesPorDocente (idUsuario) {
     let connection = null
     try {
       connection = await getConnection()

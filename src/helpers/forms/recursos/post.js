@@ -1,4 +1,4 @@
-import { crearRecurso } from '@/actions/recursos/crear'
+import { crearRecurso } from '@/actions/recursos/crearRecurso'
 export async function post (
   formData,
   setPending,
@@ -21,7 +21,7 @@ export async function post (
     newFormData.append('mimetype', formData.recurso.type)
 
     // solicita guardar el recurso en el servidor
-    const fileResponse = await fetch(`${process.env.PUBLIC_URL}/api/recursos`, {
+    const fileResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/recursos`, {
       method: 'POST',
       body: newFormData
     })

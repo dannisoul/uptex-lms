@@ -2,17 +2,6 @@ import { getConnection } from '@/db/connection'
 import { dynamicQuery } from '@/helpers/models/dynamicQuery'
 
 export class Curso {
-  constructor (idCurso, nombre, descripcion, idCategoria, idNivel, cursoInterno, imagen, idUsuario) {
-    this.idCurso = idCurso
-    this.nombre = nombre
-    this.descripcion = descripcion
-    this.idCategoria = idCategoria
-    this.idNivel = idNivel
-    this.cursoInterno = cursoInterno
-    this.imagen = imagen || null
-    this.idUsuario = idUsuario
-  }
-
   static async crearCurso (nombre, descripcion, idCategoria, idNivel, cursoInterno, idUsuario) {
     let connection = null
     try {
@@ -31,7 +20,7 @@ export class Curso {
     }
   }
 
-  static async registrarImagen (idCurso, imagen) {
+  static async registrarImagen (idCurso, imagen) { // GUARDA EL PATH DE LA IMAGEN DEL CURSO EN LA BASE DE DATOS
     let connection = null
     try {
       connection = await getConnection()
@@ -65,7 +54,6 @@ export class Curso {
     }
   }
 
-  /* Elimina el curso y todas sus entidades relacionadas */
   static async eliminarCurso (idCurso) {
     let connection = null
     try {
@@ -82,8 +70,7 @@ export class Curso {
     }
   }
 
-  /* Desactiva un curso cambiando su status activo a 0 */
-  static async desactivarCurso (idCurso) {
+  static async desactivarCurso (idCurso) { // CAMBIA EL STATUS DE UN CURSO DE 1 A 0 PARA DESACTIVARLO
     let connection = null
     try {
       connection = await getConnection()
@@ -99,8 +86,7 @@ export class Curso {
     }
   }
 
-  /* Activa un curso cambiando su status activo a 1 */
-  static async activarCurso (idCurso) {
+  static async activarCurso (idCurso) { // CAMBIA EL STATUS DE UN CURSO DE 1 A 0 PARA DESACTIVARLO
     let connection = null
     try {
       connection = await getConnection()
@@ -116,15 +102,15 @@ export class Curso {
     }
   }
 
-  static async cursosPorDocente (idUsuario) {
+  static async cursosPorDocenteLista (idUsuario) { // LLENA LA LISTA DE CURSOS DE LOS FORMULARIOS
     let connection = null
     try {
       connection = await getConnection()
       const sql = `
-      SELECT c.*, u.avatar 
-      FROM curso c 
-      INNER JOIN usuario u ON c.idUsuario = u.idUsuario
-      WHERE u.idUsuario = ?`
+      SELECT 
+        curso.nombre as name, curso.idCurso as value
+      FROM
+        curso WHERE idUsuario = ? AND activo = 1`
       const values = [idUsuario]
       const [cursos] = await connection.execute(sql, values)
       return { error: false, errorCode: null, cursos }

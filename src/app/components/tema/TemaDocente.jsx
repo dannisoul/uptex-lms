@@ -9,7 +9,7 @@ import { Recurso2 } from '../modals/Recurso2'
 import { useState } from 'react'
 import { useRecursos } from '@/hooks/useRecursos'
 import { Eliminar } from '../modals/Eliminar'
-import { eliminarRecurso } from '@/actions/recursos/eliminar'
+import { eliminarRecurso } from '@/actions/recursos/eliminarRecurso'
 
 export function TemaDocente ({ tema, toast, initialRecursos }) {
   const { handleModal: handleModalRecurso1, modal: modalRecurso1 } = useModal()
