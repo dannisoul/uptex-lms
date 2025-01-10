@@ -3,7 +3,7 @@ import { CursoCardContent } from './CursoCardContent'
 import { activarCurso } from '@/actions/curso/activarCurso'
 import Link from 'next/link'
 
-export function CursoCard ({ avatar, nombre, grupo, descripcion, imagen, id, ruta, inicio, cierre, status = 1, updateCursos, toast }) {
+export function CursoCard ({ avatar, nombre, texto, descripcion, imagen, id, ruta, inicio, cierre, status = 1, updateCursos, toast }) {
   return (
     <div className='w-[250px] h-[280px] rounded-[40px] shadow-xl select-none group relative'>
       {
@@ -41,7 +41,7 @@ export function CursoCard ({ avatar, nombre, grupo, descripcion, imagen, id, rut
                   avatar={avatar}
                   cierre={cierre}
                   descripcion={descripcion}
-                  grupo={grupo}
+                  texto={texto}
                   imagen={imagen}
                   inicio={inicio}
                   nombre={nombre}
@@ -55,7 +55,7 @@ export function CursoCard ({ avatar, nombre, grupo, descripcion, imagen, id, rut
                   avatar={avatar}
                   cierre={cierre}
                   descripcion={descripcion}
-                  grupo={grupo}
+                  texto={texto}
                   imagen={imagen}
                   inicio={inicio}
                   nombre={nombre}

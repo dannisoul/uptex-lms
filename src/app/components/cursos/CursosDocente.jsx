@@ -42,16 +42,17 @@ export function CursosDocente ({ initialCursos, toast }) {
         <NuevoCurso handleClick={handleModal} title='Nuevo Curso' title2='Crea un nuevo curso' />
         {cursos.map((curso, index) => {
           const avatar = curso.avatar ? `/api/usuarios/images/?idDocente=${curso.idUsuario}&idImagen=${curso.avatar}` : '/mis_cursos/usuario.png'
+          const imagen = `/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`
           if (index === cursos.length - 1) {
             return (
               <div key={`${curso.nombre}-${(curso?.idGrupo || curso?.idCurso)}`} ref={lastElementRef}>
                 <CursoCard
                   avatar={avatar}
                   nombre={curso.nombre}
-                  grupo={curso.grupo || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`}
+                  texto={curso.grupo || 'Click para gestionar'}
+                  imagen={imagen}
                   descripcion={curso.descripcion}
-                  id={(curso?.idGrupo || curso.idCurso)}
+                  id={curso.idCurso}
                   ruta='/mis_cursos'
                   status={curso.activo}
                   updateCursos={updateCursos}
@@ -65,10 +66,10 @@ export function CursosDocente ({ initialCursos, toast }) {
                 <CursoCard
                   avatar={avatar}
                   nombre={curso.nombre}
-                  grupo={curso.grupo || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`}
+                  texto={curso.grupo || 'Click para gestionar'}
+                  imagen={imagen}
                   descripcion={curso.descripcion}
-                  id={(curso?.idGrupo || curso.idCurso)}
+                  id={curso.idCurso}
                   ruta='/mis_cursos'
                   status={curso.activo}
                   updateCursos={updateCursos}
