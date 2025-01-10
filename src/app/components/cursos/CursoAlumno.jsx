@@ -44,15 +44,16 @@ export function CursoAlumno ({ curso, unidades = [], temas = [], grupos }) {
           <div className='grid cardContainer gap-8'>
             {grupos.map(grupo => {
               const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idImagen=${grupo.avatar}` : '/mis_cursos/usuario.png'
+              const imagen = `/api/cursos/images?idImagen=${grupo.imagen}&idDocente=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
               return (
                 <CursoCard
-                  key={`${grupo.nombre}-${(grupo?.idGrupo || grupo?.idCurso)}`}
+                  key={`${grupo.nombre}-${grupo?.idGrupo}`}
                   avatar={avatar}
                   nombre={grupo.nombre}
-                  grupo={grupo.grupo || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${grupo.imagen}&idDocente=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`}
+                  texto={grupo.grupo}
+                  imagen={imagen}
                   descripcion={grupo.descripcion}
-                  id={(grupo?.idGrupo || grupo.idCurso)}
+                  id={grupo?.idGrupo}
                   ruta='/mis_cursos'
                 />
               )

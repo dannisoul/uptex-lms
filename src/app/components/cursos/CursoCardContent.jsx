@@ -1,4 +1,4 @@
-export function CursoCardContent ({ imagen, avatar, nombre, grupo, inicio, cierre, descripcion, status }) {
+export function CursoCardContent ({ imagen, avatar, nombre, texto, inicio, cierre, descripcion, status }) {
   return (
     <>
       <img
@@ -10,7 +10,7 @@ export function CursoCardContent ({ imagen, avatar, nombre, grupo, inicio, cierr
           <img className='w-10 h-10 rounded-full shadow-lg sm:group-hover:hidden transition-all object-cover' src={avatar} />
           <div className='grow text-[12px]'>
             <h2 className='font-bold text-primary-accent dark:text-dark-primary-accent w-[140px] text-ellipsis overflow-hidden sm:group-hover:w-auto line-clamp-1'>{nombre}</h2>
-            <span className='text-primary-text font-medium dark:text-white sm:group-hover:hidden'>{grupo}</span>
+            <span className='text-primary-text font-medium dark:text-white sm:group-hover:hidden'>{texto}</span>
             {inicio && cierre &&
               <>
                 <span className='hidden sm:group-hover:block dark:text-white dark:font-medium mt-2'>Inicia: {new Date(inicio).toISOString().slice(0, 10)}</span>

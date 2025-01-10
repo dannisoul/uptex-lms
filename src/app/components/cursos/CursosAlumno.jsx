@@ -36,30 +36,31 @@ export function CursosAlumno ({ initialCursos, user, toast }) {
         <NuevoCurso handleClick={handleModal} title='Nuevo Curso' title2='Crea un nuevo curso' />
         {cursos.map((curso, index) => {
           const avatar = curso.avatar ? `/api/usuarios/images/?idDocente=${curso.idUsuario}&idImagen=${curso.avatar}` : '/mis_cursos/usuario.png'
+          const imagen = `/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`
           if (index === cursos.length - 1) {
             return (
-              <div key={`${curso.nombre}-${(curso?.idGrupo || curso?.idCurso)}`} ref={lastElementRef}>
+              <div key={`${curso.nombre}-${curso?.idGrupo}`} ref={lastElementRef}>
                 <CursoCard
                   avatar={avatar}
                   nombre={curso.nombre}
-                  grupo={curso.grupo || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`}
+                  texto={curso.grupo}
+                  imagen={imagen}
                   descripcion={curso.descripcion}
-                  id={(curso?.idGrupo || curso.idCurso)}
+                  id={curso?.idGrupo}
                   ruta='/mis_cursos'
                 />
               </div>
             )
           } else {
             return (
-              <div key={`${curso.nombre}-${(curso?.idGrupo || curso?.idCurso)}`}>
+              <div key={`${curso.nombre}-${curso?.idGrupo}`}>
                 <CursoCard
                   avatar={avatar}
                   nombre={curso.nombre}
-                  grupo={curso.grupo || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`}
+                  texto={curso.grupo}
+                  imagen={imagen}
                   descripcion={curso.descripcion}
-                  id={(curso?.idGrupo || curso.idCurso)}
+                  id={curso?.idGrupo}
                   ruta='/mis_cursos'
                 />
               </div>

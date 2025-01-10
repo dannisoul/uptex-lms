@@ -33,17 +33,18 @@ export function PaginacionCursos () {
       <div className='grid cardContainer gap-8 place-content-center mt-16'>
         {cursos.map((curso, index) => {
           const avatar = curso.avatar ? `/api/usuarios/images/?idDocente=${curso.idUsuario}&idImagen=${curso.avatar}` : '/mis_cursos/usuario.png'
+          const imagen = `/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`
           if (index === cursos.length - 1) {
             return (
               <div ref={lastElementRef} key={curso.idGrupo}>
                 <CursoCard
                   avatar={avatar}
                   descripcion={curso.descripcion}
-                  grupo={curso.grupo}
+                  texto={curso.grupo}
                   id={curso.idGrupo}
-                  imagen={`/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`}
+                  imagen={imagen}
                   nombre={curso.nombre}
-                  ruta='mis_cursos'
+                  ruta='/mis_cursos'
                   inicio={curso.inicio}
                   cierre={curso.cierre}
                 />
@@ -55,11 +56,11 @@ export function PaginacionCursos () {
                 <CursoCard
                   avatar={avatar}
                   descripcion={curso.descripcion}
-                  grupo={curso.grupo}
+                  texto={curso.grupo}
                   id={curso.idGrupo}
-                  imagen={`/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`}
+                  imagen={imagen}
                   nombre={curso.nombre}
-                  ruta='mis_cursos'
+                  ruta='/mis_cursos'
                   inicio={curso.inicio}
                   cierre={curso.cierre}
                 />

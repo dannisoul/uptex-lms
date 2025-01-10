@@ -40,17 +40,17 @@ export function GruposDocente ({ initialGrupos, user, toast, cursos }) {
         <NuevoCurso handleClick={handleModal} title='Nuevo Grupo' title2='Crea un nuevo grupo' />
         {grupos.map((grupo, index) => {
           const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idImagen=${grupo.avatar}` : '/mis_cursos/usuario.png'
-
+          const imagen = `/api/cursos/images?idImagen=${grupo?.imagen}&idDocente=${(grupo?.idUsuario)}&idCurso=${grupo?.idCurso}`
           if (index === grupos.length - 1) {
             return (
               <div key={`${grupo?.nombre}-${grupo?.idGrupo}`} ref={lastElementRef}>
                 <CursoCard
                   avatar={avatar}
                   nombre={grupo?.nombrecurso}
-                  grupo={grupo?.nombre || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${grupo?.imagen}&idDocente=${(grupo?.idUsuario)}&idCurso=${grupo?.idCurso}`}
+                  texto={grupo?.nombre}
+                  imagen={imagen}
                   descripcion={grupo?.descripcion}
-                  id={(grupo?.idGrupo || grupo?.idCurso)}
+                  id={grupo?.idGrupo}
                   ruta='mis_grupos'
                   inicio={grupo?.inicio}
                   cierre={grupo?.cierre}
@@ -63,10 +63,10 @@ export function GruposDocente ({ initialGrupos, user, toast, cursos }) {
                 <CursoCard
                   avatar={avatar}
                   nombre={grupo?.nombrecurso}
-                  grupo={grupo?.nombre || 'Click para gestionar'}
-                  imagen={`/api/cursos/images?idImagen=${grupo?.imagen}&idDocente=${(grupo?.idUsuario)}&idCurso=${grupo?.idCurso}`}
+                  texto={grupo?.nombre}
+                  imagen={imagen}
                   descripcion={grupo?.descripcion}
-                  id={(grupo?.idGrupo || grupo?.idCurso)}
+                  id={grupo?.idGrupo}
                   ruta='mis_grupos'
                   inicio={grupo?.inicio}
                   cierre={grupo?.cierre}
