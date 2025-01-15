@@ -16,8 +16,10 @@ export function AccountOptions ({ usuario }) {
   const [pending, setPending] = useState(false)
   const navbar = getNavbar(usuario.idRol)
   const { avatar } = useContext(UserContext)
-  const rolDescription = (usuario?.idRol === 2) ? 'idDocente' : (usuario?.idRol === 3) ? 'idAlumno' : 'idAdmin'
-  const avatarURL = `/api/usuarios/images?${rolDescription}=${usuario?.idUsuario}&idImagen=${avatar}`
+
+  // const avatarURL = `/api/usuarios/images?idUsuario=${usuario?.idUsuario}&idImagen=${avatar}`
+  const avatarURL = process.env.NEXT_PUBLIC_BUCKET + `/uploads/${usuario.idUsuario}/perfil/` + avatar
+
   useEffect(() => {
     function hideAccountOptions (e) {
       if (!e.target.matches('#accountOptions') && !e.target.matches('#accountOptions *') &&
