@@ -1,6 +1,7 @@
 import { writeFile } from 'node:fs/promises'
 import { join, extname, basename } from 'node:path'
 import { optimizeImage } from './optimizeImage'
+
 export async function uploadFile (file, path, isImage = false) {
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
