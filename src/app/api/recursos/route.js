@@ -1,11 +1,12 @@
-import { createDirIfNotExists } from '@/helpers/createDirIfNotExists'
+// import { createDirIfNotExists } from '@/helpers/createDirIfNotExists'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
-import { uploadFile } from '@/helpers/uploadFile'
+// import { uploadFile } from '@/helpers/uploadFile'
 import { join } from 'path'
 import { createReadStream } from 'fs'
 import { NextResponse } from 'next/server'
 import Mime from 'mime'
+import { uploadObject } from '@/helpers/bucketGCS'
 
 export async function POST (req) {
   const session = await getServerSession(authOptions)
@@ -16,11 +17,13 @@ export async function POST (req) {
   const idCurso = formData.get('idCurso')
   const idUnidad = formData.get('idUnidad')
   const idTema = formData.get('idTema')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/docentes/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
-  await createDirIfNotExists(path)
+  // const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
+  const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
 
-  const response = await uploadFile(file, path)
-  return Response.json(response)
+  const uploadResponse = await uploadObject(file, path)
+  // await createDirIfNotExists(path)
+  // const uploadResponse = await uploadFile(file, path)
+  return Response.json(uploadResponse)
 }
 
 export async function GET (req) {

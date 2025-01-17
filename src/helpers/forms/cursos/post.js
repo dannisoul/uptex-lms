@@ -30,7 +30,7 @@ export async function post (
     const fileResponse = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/cursos/images`,
       {
-        method: 'POST',
+        method: 'PUT',
         body: newFormData
       }
     )

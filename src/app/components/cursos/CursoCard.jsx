@@ -9,7 +9,6 @@ export function CursoCard ({ avatar, nombre, texto, descripcion, imagen, id, rut
       {
         (status === 0) &&
           <>
-
             <div className='bg-yellow-400 text-black w-fit rounded-full p-1 shadow-lg absolute right-4 top-4 z-10 group hover:bg-yellow-500 transition-all'>
               <IconExclamationMark />
             </div>

@@ -2,10 +2,11 @@ import { createDirIfNotExists } from '@/helpers/createDirIfNotExists'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../../auth/[...nextauth]/route'
 import { uploadFile } from '@/helpers/uploadFile'
-import { deleteFile } from '@/helpers/deleteFile'
-import { extname, join } from 'node:path'
-import { createReadStream } from 'node:fs'
-import { NextResponse } from 'next/server'
+// import { deleteFile } from '@/helpers/deleteFile'
+// import { extname, join } from 'node:path'
+// import { createReadStream } from 'node:fs'
+// import { NextResponse } from 'next/server'
+import { deleteObject, uploadObject } from '@/helpers/bucketGCS'
 
 export async function POST (req) {
   const session = await getServerSession(authOptions)
@@ -25,17 +26,23 @@ export async function PUT (req) {
   const session = await getServerSession(authOptions)
   if (!session) return Response.json({ error: true })
   const formData = await req.formData()
-  const file = formData.get('imagen')
-  const fileToRemove = formData.get('fileToRemove')
+  const newFile = formData.get('imagen')
+  const oldFile = formData.get('fileToRemove')
   const idCurso = formData.get('idCurso')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/docentes/${session.user.idUsuario}/cursos/${idCurso}`
-  const isDeleted = await deleteFile(path, fileToRemove)
-  if (isDeleted.error) return Response.json({ error: true, baseName: file.name, description: `Archivo: ${file.name} no guardado` })
-  const response = await uploadFile(file, path, true)
-  return Response.json(response)
+  // const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/${session.user.idUsuario}/cursos/${idCurso}`
+  const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}`
+  console.log(newFile, 'Archivo nuevo')
+  console.log(oldFile, 'Archivo viejo')
+  if (oldFile) {
+    // await deleteFile(path)
+    await deleteObject(path + '/' + oldFile)
+  }
+  // const response = await uploadFile(newFile, path, true)
+  const uploadReponse = await uploadObject(newFile, path, { optimizeImage: true })
+  return Response.json(uploadReponse)
 }
 
-export async function GET (req) {
+/* export async function GET (req) {
   const session = await getServerSession(authOptions)
   if (!session) return Response.json({ error: true })
 
@@ -56,3 +63,4 @@ export async function GET (req) {
   })
   return res
 }
+ */

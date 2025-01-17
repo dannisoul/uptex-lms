@@ -52,11 +52,12 @@ function getPreview (file) {
   } else if (file.mimeType.startsWith('audio/')) {
     return <audio src={file.ruta} controls autoPlay />
   } else if (file.mimeType === 'application/pdf') {
-    return <iframe src={file.ruta} className='w-3/4' width='90%' height='90%' />
+    return <iframe src={file.path} className='w-3/4' width='90%' height='90%' />
   } else if (file.mimeType === 'application/msword' || file.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+    console.log(file.path)
     return (
       <DocViewer
-        documents={[{ uri: process.env.NEXT_PUBLIC_URL + file.ruta, fileName: file.nombre }]}
+        documents={[{ uri: file.path }]}
         pluginRenderers={DocViewerRenderers}
         className='h-[500px] w-[500px]'
         style={{ width: '90%', height: '85%' }}

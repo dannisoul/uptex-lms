@@ -68,34 +68,37 @@ export function AlumnosGrupo ({ grupo, toast, idGrupo }) {
             </tr>
           </thead>
           <tbody>
-            {alumnos.map(alumno => (
-              <tr key={alumno.idUsuario} className='hover:bg-gray-100 dark:hover:bg-[#232325] rounded-xl'>
-                <td>
-                  <Link className='flex gap-2 py-2' href={`/perfil/${alumno.idUsuario}`}>
-                    {alumno.avatar === null
-                      ? <img className='w-8 h-8 my-auto sm:block hidden' src='/avatar/alumno.png' />
-                      : <img className='w-8 h-8 rounded-full sm:block hidden' src={`/api/usuarios/images/?idAlumno=${alumno.idUsuario}&idImagen=${alumno.avatar}`} alt='avatar' />}
-                    <div className='flex flex-col'>
-                      <span className='text-sm text-black font-medium dark:text-white'>{alumno.paterno} {alumno.materno} {alumno.nombre} </span>
-                      <span className='text-[12px] dark:text-dark-secondary-accent font-medium'>{alumno.correo}</span>
+            {alumnos.map(alumno => {
+              const avatar = alumno.avatar ? process.env.NEXT_PUBLIC_BUCKET + `/uploads/${alumno.idUsuario}/perfil/` + alumno.avatar : '/avatar/avatar_placeholder.jpg'
+              return (
+                <tr key={alumno.idUsuario} className='hover:bg-gray-100 dark:hover:bg-[#232325] rounded-xl'>
+                  <td>
+                    <Link className='flex gap-2 py-2' href={`/perfil/${alumno.idUsuario}`}>
+                      {alumno.avatar === null
+                        ? <img className='w-8 h-8 my-auto sm:block hidden' src='/avatar/alumno.png' />
+                        : <img className='w-8 h-8 rounded-full sm:block hidden' src={avatar} alt='avatar' />}
+                      <div className='flex flex-col'>
+                        <span className='text-sm text-black font-medium dark:text-white'>{alumno.paterno} {alumno.materno} {alumno.nombre} </span>
+                        <span className='text-[12px] dark:text-dark-secondary-accent font-medium'>{alumno.correo}</span>
+                      </div>
+                    </Link>
+                  </td>
+                  <td className='text-sm md:table-cell hidden dark:text-white'>{alumno.genero === 'M' ? 'Hombre' : 'Mujer'}</td>
+                  <td className=''>
+                    <div className='mx-auto w-fit'>
+                      <ActionButton
+                        icon={<IconTrash />}
+                        onClick={() => {
+                          updateIdAlumno(alumno.idUsuario)
+                          updateNombreAlumno(`${alumno.nombre} ${alumno.paterno} ${alumno.materno}`)
+                          handleModalEliminarAlumno()
+                        }}
+                      />
                     </div>
-                  </Link>
-                </td>
-                <td className='text-sm md:table-cell hidden dark:text-white'>{alumno.genero === 'M' ? 'Hombre' : 'Mujer'}</td>
-                <td className=''>
-                  <div className='mx-auto w-fit'>
-                    <ActionButton
-                      icon={<IconTrash />}
-                      onClick={() => {
-                        updateIdAlumno(alumno.idUsuario)
-                        updateNombreAlumno(`${alumno.nombre} ${alumno.paterno} ${alumno.materno}`)
-                        handleModalEliminarAlumno()
-                      }}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
         {alumnos.length === 0 && !loading && <p className='text-center text-[14px] text-primary-text dark:text-dark-primary-text my-4'>No hay alumnos</p>}

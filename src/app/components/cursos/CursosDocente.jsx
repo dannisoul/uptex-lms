@@ -41,8 +41,10 @@ export function CursosDocente ({ initialCursos, toast }) {
       <section className='grid cardContainer gap-8 place-content-center mt-16'>
         <NuevoCurso handleClick={handleModal} title='Nuevo Curso' title2='Crea un nuevo curso' />
         {cursos.map((curso, index) => {
-          const avatar = curso.avatar ? `/api/usuarios/images/?idDocente=${curso.idUsuario}&idImagen=${curso.avatar}` : '/mis_cursos/usuario.png'
-          const imagen = `/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`
+          // const avatar = curso.avatar ? `/api/usuarios/images/?idDocente=${curso.idUsuario}&idImagen=${curso.avatar}` : '/mis_cursos/usuario.png'
+          // const imagen = `/api/cursos/images?idImagen=${curso.imagen}&idDocente=${(curso.idUsuario)}&idCurso=${curso.idCurso}`
+          const avatar = curso.avatar ? process.env.NEXT_PUBLIC_BUCKET + `/uploads/${curso.idUsuario}/perfil/${curso.avatar}` : '/mis_cursos/usuario.png'
+          const imagen = `${process.env.NEXT_PUBLIC_BUCKET}/uploads/${curso.idUsuario}/cursos/${curso.idCurso}/${curso.imagen}`
           if (index === cursos.length - 1) {
             return (
               <div key={`${curso.nombre}-${(curso?.idGrupo || curso?.idCurso)}`} ref={lastElementRef}>

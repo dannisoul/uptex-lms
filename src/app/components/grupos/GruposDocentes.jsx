@@ -39,8 +39,11 @@ export function GruposDocente ({ initialGrupos, user, toast, cursos }) {
       <section className='grid cardContainer gap-8 place-content-center mt-16'>
         <NuevoCurso handleClick={handleModal} title='Nuevo Grupo' title2='Crea un nuevo grupo' />
         {grupos.map((grupo, index) => {
-          const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idImagen=${grupo.avatar}` : '/mis_cursos/usuario.png'
-          const imagen = `/api/cursos/images?idImagen=${grupo?.imagen}&idDocente=${(grupo?.idUsuario)}&idCurso=${grupo?.idCurso}`
+          // const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idImagen=${grupo.avatar}` : '/mis_cursos/usuario.png'
+          // const imagen = `/api/cursos/images?idImagen=${grupo?.imagen}&idDocente=${(grupo?.idUsuario)}&idCurso=${grupo?.idCurso}`
+          const avatar = grupo.avatar ? process.env.NEXT_PUBLIC_BUCKET + `/uploads/${grupo.idUsuario}/perfil/${grupo.avatar}` : '/mis_cursos/usuario.png'
+          const imagen = `${process.env.NEXT_PUBLIC_BUCKET}/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
+
           if (index === grupos.length - 1) {
             return (
               <div key={`${grupo?.nombre}-${grupo?.idGrupo}`} ref={lastElementRef}>
