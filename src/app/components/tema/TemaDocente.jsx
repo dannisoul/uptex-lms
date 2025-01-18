@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { useRecursos } from '@/hooks/useRecursos'
 import { Eliminar } from '../modals/Eliminar'
 import { eliminarRecurso } from '@/actions/recursos/eliminarRecurso'
+import { FilePreview } from '../shared/FilePreview'
 
 export function TemaDocente ({ tema, toast, initialRecursos }) {
   const { handleModal: handleModalRecurso1, modal: modalRecurso1 } = useModal()
@@ -18,11 +19,16 @@ export function TemaDocente ({ tema, toast, initialRecursos }) {
   const { recursos, updateRecursos } = useRecursos({ initialState: initialRecursos })
   const [fileType, setFileType] = useState(null)
   const [recurso, setRecurso] = useState()
+  const [file, setFile] = useState()
+  const { modal, handleModal } = useModal()
   function updateFileType (type) {
     setFileType(type)
   }
   function updateRecurso (recurso) {
     setRecurso(recurso)
+  }
+  function updateFile (file) {
+    setFile(file)
   }
   return (
     <>
@@ -43,7 +49,7 @@ export function TemaDocente ({ tema, toast, initialRecursos }) {
               <span className=''>Para subir un recurso presiona el botón de "Añadir"</span>
             </li>}
           {recursos.map(recurso => (
-            <Recurso key={recurso.idRecurso} recurso={recurso} updateRecurso={updateRecurso} handleDeleteRecurso={handleModalEliminarRecurso} actions />
+            <Recurso key={recurso.idRecurso} recurso={recurso} updateFile={updateFile} updateRecurso={updateRecurso} handleDeleteRecurso={handleModalEliminarRecurso} handleView={handleModal} viewPermission deletePermission />
           ))}
         </Accordion>
       </section>
@@ -81,6 +87,10 @@ export function TemaDocente ({ tema, toast, initialRecursos }) {
           nameToDelete={`Recurso ${recurso.nombre}`}
         />
       )}
+      {
+        modal &&
+          <FilePreview file={file} handleModal={handleModal} />
+      }
     </>
   )
 }
