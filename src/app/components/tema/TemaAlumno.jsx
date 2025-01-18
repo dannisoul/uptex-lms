@@ -3,9 +3,8 @@
 import { useModal } from '@/hooks/useModal'
 import { Accordion } from '../shared/Accordion'
 import { Recurso } from './Recurso'
-import { Media } from '../modals/Media'
 import { useState } from 'react'
-import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer'
+import { FilePreview } from '../shared/FilePreview'
 
 export function TemaAlumno ({ tema, recursos = [] }) {
   const { handleModal, modal } = useModal()
@@ -30,65 +29,14 @@ export function TemaAlumno ({ tema, recursos = [] }) {
               <span className=''>Aquí aparecerá el contenido que comparta tu docente</span>
             </li>}
           {recursos.map(recurso => (
-            <Recurso key={recurso.idRecurso} recurso={recurso} handleView={handleModal} updateFile={updateFile} />
+            <Recurso key={recurso.idRecurso} recurso={recurso} handleView={handleModal} updateFile={updateFile} viewPermission />
           ))}
         </Accordion>
       </section>
       {
         modal &&
-          <Media handleModal={handleModal} file={file}>
-            {getPreview(file)}
-          </Media>
+          <FilePreview handleModal={handleModal} file={file} />
       }
     </>
   )
-}
-
-function getPreview (file) {
-  if (file.mimeType.startsWith('image/')) {
-    return <img src={file.ruta} className='h-[90dvh] object-contain' />
-  } else if (file.mimeType.startsWith('video/')) {
-    return <video src={file.ruta} controls autoPlay className='w-3/4' />
-  } else if (file.mimeType.startsWith('audio/')) {
-    return <audio src={file.ruta} controls autoPlay />
-  } else if (file.mimeType === 'application/pdf') {
-    return <iframe src={file.path} className='w-3/4' width='90%' height='90%' />
-  } else if (file.mimeType === 'application/msword' || file.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-    console.log(file.path)
-    return (
-      <DocViewer
-        documents={[{ uri: file.path }]}
-        pluginRenderers={DocViewerRenderers}
-        className='h-[500px] w-[500px]'
-        style={{ width: '90%', height: '85%' }}
-      />
-    )
-  } else if (file.mimeType === 'application/vnd.ms-powerpoint' || file.mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
-    return (
-      <DocViewer
-        documents={[{ uri: process.env.NEXT_PUBLIC_URL + file.ruta, fileName: file.nombre }]}
-        pluginRenderers={DocViewerRenderers}
-        className='h-[500px] w-[500px]'
-        style={{ width: '90%', height: '85%' }}
-      />
-    )
-  } else if (file.mimeType === 'application/vnd.ms-excel' || file.mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-    return (
-      <DocViewer
-        documents={[{ uri: process.env.NEXT_PUBLIC_URL + file.ruta, fileName: file.nombre }]}
-        pluginRenderers={DocViewerRenderers}
-        className='h-[500px] w-[500px]'
-        style={{ width: '90%', height: '85%' }}
-      />
-    )
-  } else if (file.mimeType === 'plain/text' || file.mimeType) {
-    return (
-      <DocViewer
-        documents={[{ uri: process.env.NEXT_PUBLIC_URL + file.ruta, fileName: file.nombre }]}
-        pluginRenderers={DocViewerRenderers}
-        className='h-[500px] w-[500px]'
-        style={{ width: '90%', height: '85%' }}
-      />
-    )
-  }
 }

@@ -10,11 +10,15 @@ function connect () {
   pool = createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    host: process.env.DB_HOST,
+    // host: process.env.DB_HOST,
+    socketPath: process.env.DB_SOCKETPATH,
     database: process.env.DB_NAME,
+    // port: process.env.DB_NAME,
     connectionLimit: 10,
     queueLimit: 10,
-    idleTimeout: 60
+    idleTimeout: 60,
+    connectTimeout: 20000,
+    waitForConnections: true
   })
 
   return pool
