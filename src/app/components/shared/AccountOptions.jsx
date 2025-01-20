@@ -18,7 +18,7 @@ export function AccountOptions ({ usuario }) {
   const { avatar } = useContext(UserContext)
 
   // const avatarURL = `/api/usuarios/images?idUsuario=${usuario?.idUsuario}&idImagen=${avatar}`
-  const avatarURL = process.env.NEXT_PUBLIC_BUCKET + `/uploads/${usuario.idUsuario}/perfil/` + avatar
+  const avatarURL = (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${usuario.idUsuario}/perfil/` + avatar
 
   useEffect(() => {
     function hideAccountOptions (e) {

@@ -21,7 +21,7 @@ export async function post (
     newFormData.append('mimetype', formData.recurso.type)
 
     // solicita guardar el recurso en el servidor
-    const fileResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/recursos`, {
+    const fileResponse = await fetch(`${(process.env.NEXT_PUBLIC_URL) || 'https://uptex-lms-765271791469.us-central1.run.app'}/api/recursos`, {
       method: 'POST',
       body: newFormData
     })

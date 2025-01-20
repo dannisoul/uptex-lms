@@ -8,7 +8,7 @@ export function CursoPreview ({ curso, unidades = [], temas = [], grupos }) {
     <>
       <section className=''>
         <div className='flex items-center gap-12'>
-          <img className='shrink-0 w-[280px] h-[280px] rounded-[25px] object-cover shadow-lg md:block hidden' src={`${process.env.NEXT_PUBLIC_BUCKET}/uploads/${curso.idUsuario}/cursos/${curso.idCurso}/${curso.imagen}`} alt='' />
+          <img className='shrink-0 w-[280px] h-[280px] rounded-[25px] object-cover shadow-lg md:block hidden' src={`${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms'}/uploads/${curso.idUsuario}/cursos/${curso.idCurso}/${curso.imagen}`} alt='' />
           <div className='flex flex-col'>
             <div className='flex flex-col gap-2'>
               <h1 className='sm:text-2xl text-xl font-bold text-secondary-accent dark:text-dark-primary-accent '>
@@ -50,8 +50,8 @@ export function CursoPreview ({ curso, unidades = [], temas = [], grupos }) {
             {grupos.map(grupo => {
               // const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idI}magen=${grupo.avatar}` : '/mis_cursos/usuario.png'
               // const imagen = `/api/cursos/images?idImagen=${grupo.imagen}&idDocente=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
-              const avatar = grupo.avatar ? process.env.NEXT_PUBLIC_BUCKET + `/uploads/${grupo.idUsuario}/perfil/${grupo.avatar}` : '/mis_cursos/usuario.png'
-              const imagen = `${process.env.NEXT_PUBLIC_BUCKET}/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
+              const avatar = grupo.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${grupo.idUsuario}/perfil/${grupo.avatar}` : '/mis_cursos/usuario.png'
+              const imagen = `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms'}/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
 
               return (
                 <CursoCard

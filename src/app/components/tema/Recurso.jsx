@@ -4,7 +4,7 @@ import { ActionButton } from '../shared/ActionButton'
 export function Recurso ({ recurso, handleDeleteRecurso, updateRecurso, deletePermission, viewPermission, handleView, updateFile }) {
   const icon = getIcon(recurso.mimetype)
   // const ruta = `/api/recursos?idRecurso=${encodeURIComponent(recurso.ruta)}&idCurso=${recurso.idCurso}&idUnidad=${recurso.idUnidad}&idTema=${recurso.idTema}&idDocente=${recurso.idDocente}`
-  const path = `${process.env.NEXT_PUBLIC_BUCKET}/uploads/${recurso.idDocente}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}/${recurso.nombre}`
+  const path = `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms'}/uploads/${recurso.idDocente}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}/${recurso.nombre}`
   return (
     <li className='px-4 py-2 flex items-center justify-between gap-2 border-b hover:bg-alpha-bg/20 dark:bg-dark-tertiary-bg dark:text-white dark:border-b-alpha-bg/20 transition-all'>
       <div className='flex items-center gap-4'>

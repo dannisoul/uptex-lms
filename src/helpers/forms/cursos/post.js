@@ -28,7 +28,7 @@ export async function post (
 
     // con el id del curso crea la carpeta y guarda la imagen del curso
     const fileResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/cursos/images`,
+      `${(process.env.NEXT_PUBLIC_URL) || 'https://uptex-lms-765271791469.us-central1.run.app'}/api/cursos/images`,
       {
         method: 'PUT',
         body: newFormData

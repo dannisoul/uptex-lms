@@ -45,8 +45,8 @@ export function CursoAlumno ({ curso, unidades = [], temas = [], grupos }) {
             {grupos.map(grupo => {
               // const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idImagen=${grupo.avatar}` : '/mis_cursos/usuario.png'
               // const imagen = `/api/cursos/images?idImagen=${grupo.imagen}&idDocente=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
-              const avatar = grupo.avatar ? process.env.NEXT_PUBLIC_BUCKET + `/uploads/${grupo.idUsuario}/perfil/${grupo.avatar}` : '/mis_cursos/usuario.png'
-              const imagen = `${process.env.NEXT_PUBLIC_BUCKET}/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
+              const avatar = grupo.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${grupo.idUsuario}/perfil/${grupo.avatar}` : '/mis_cursos/usuario.png'
+              const imagen = `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms'}/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
 
               return (
                 <CursoCard

@@ -7,7 +7,7 @@ import { ImageFileInput } from '../forms/ImageFileInput'
 
 export function InformacionPersonal ({ usuario, formData, errors, handleInputChange, handleSelectChange, rolImgURL }) {
   // const avatarURL = usuario.avatar ? `/api/usuarios/images/?id${rolImgURL}=${usuario.idUsuario}&idImagen=${usuario.avatar}` : '/avatar/avatar_placeholder.jpg'
-  const avatarURL = usuario.avatar ? process.env.NEXT_PUBLIC_BUCKET + `/uploads/${usuario.idUsuario}/perfil/` + usuario.avatar : '/avatar/avatar_placeholder.jpg'
+  const avatarURL = usuario.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${usuario.idUsuario}/perfil/` + usuario.avatar : '/avatar/avatar_placeholder.jpg'
   return (
     <section className='flex lg:gap-20 gap-10 border-b-2 border-alpha-bg/20 pb-8 lg:flex-nowrap flex-wrap'>
       <ImageFileInput name='avatar' preview={avatarURL} handleInputChange={handleInputChange} errors={errors.avatar} />
