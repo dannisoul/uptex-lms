@@ -2,15 +2,15 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
 // import { uploadFile } from '@/helpers/uploadFile'
-import { join } from 'path'
-import { createReadStream } from 'fs'
-import { NextResponse } from 'next/server'
-import Mime from 'mime'
+// import { join } from 'path'
+// import { createReadStream } from 'fs'
+// import { NextResponse } from 'next/server'
+// import Mime from 'mime'
 import { uploadObject } from '@/helpers/bucketGCS'
 
 export async function POST (req) {
   const session = await getServerSession(authOptions)
-  if (!session) return Response.json({ error: true })
+  if (!session) return Response.json({ error: true, description: 'Usuario no autenticado' })
 
   const formData = await req.formData()
   const file = formData.get('recurso')
@@ -26,9 +26,9 @@ export async function POST (req) {
   return Response.json(uploadResponse)
 }
 
-export async function GET (req) {
+/* export async function GET (req) {
   const session = await getServerSession(authOptions)
-  if (!session) return Response.json({ error: true })
+  if (!session) return Response.json({ error: true, description: 'Usuario no autenticado' })
   const url = req.nextUrl
   const searchParams = new URL(url).searchParams
   const idCurso = searchParams.get('idCurso')
@@ -47,4 +47,24 @@ export async function GET (req) {
     })
   })
   return res
+} */
+
+/* export async function DELETE (req) {
+  const session = await getServerSession(authOptions)
+  if (!session.user) return Response.json({ error: true, description: 'Usuario no autenticado' })
+
+  const url = req.nextUrl
+  const searchParams = new URL(url).searchParams
+  const idCurso = searchParams.get('idCurso')
+  const idUnidad = searchParams.get('idUnidad')
+  const idTema = searchParams.get('idTema')
+  const file = searchParams.get('recurso')
+  const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}/${file}`
+
+  const deleteResponse = await deleteObject(path)
+
+  return Response.json(deleteResponse)
+
+  // const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/${session.user.idUsuario}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}`
 }
+ */

@@ -37,3 +37,23 @@ export async function deleteObject (path) {
     return { error: true, description: `Error al eliminar el archivo ${path}` }
   }
 }
+
+export async function deleteMultipleObjects (path) {
+  const storage = new Storage({
+    keyFilename: process.env.GCP_KEY
+  })
+
+  const deleteResponse = await new Promise((resolve, reject) => {
+    storage.bucket('uptex_lms').deleteFiles({ prefix: path, force: true }, (error) => {
+      if (!error) {
+        console.log(`Todos los archivos del directorio ${path} han sido eliminados`)
+        resolve({ error: false, description: `Archivos del directorio ${path} eliminados correctamente` })
+      } else {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject({ error: true, description: `Archivos del directorio ${path} eliminados correctamente` })
+      }
+    })
+  })
+
+  return deleteResponse
+}

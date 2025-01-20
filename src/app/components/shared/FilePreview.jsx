@@ -17,7 +17,7 @@ export function FilePreview ({ file, handleModal }) {
         <iframe
           className='w-3/4' width='90%' height='90%' src={`https://docs.google.com/gview?url=${file.path}&embedded=true`}
         />}
-      <button className='absolute top-1 right-1 lg:text-sm text-xs bg-primary-accent text-white py-1 px-2 rounded-full font-medium' onClick={handleModal}>Cerrar</button>
+      <button className='absolute top-2 right-2 lg:text-sm text-xs bg-primary-accent text-white py-1 px-2 rounded-full font-medium' onClick={handleModal}>Cerrar</button>
     </div>
   )
 }
