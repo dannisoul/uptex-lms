@@ -48,11 +48,14 @@ export function CursoPreview ({ curso, unidades = [], temas = [], grupos }) {
           </h2>
           <div className='grid cardContainer gap-8'>
             {grupos.map(grupo => {
-              // const avatar = grupo.avatar ? `/api/usuarios/images/?idDocente=${grupo.idUsuario}&idI}magen=${grupo.avatar}` : '/mis_cursos/usuario.png'
-              // const imagen = `/api/cursos/images?idImagen=${grupo.imagen}&idDocente=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
-              const avatar = grupo.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${grupo.idUsuario}/perfil/${grupo.avatar}` : '/mis_cursos/usuario.png'
-              const imagen = `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms'}/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
-
+              const avatar = grupo.avatar
+                ? (process.env.NEXT_PUBLIC_BUCKET
+                    ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${grupo.idUsuario}/perfil/${grupo.avatar}`
+                    : `/api/usuarios/imagenes?idUsuario=${grupo.idUsuario}&idImagen=${grupo.avatar}`)
+                : '/mis_cursos/usuario.png'
+              const imagen = process.env.NEXT_PUBLIC_BUCKET
+                ? `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads'}/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
+                : `/api/cursos/imagenes?idImagen=${grupo.imagen}&idUsuario=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
               return (
                 <CursoCard
                   key={`${grupo.nombre}-${(grupo?.idGrupo || grupo?.idCurso)}`}

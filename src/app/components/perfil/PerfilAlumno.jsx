@@ -4,8 +4,12 @@ import Link from 'next/link'
 
 export function PerfilAlumno (data) {
   const usuario = data.data.usuario
-  // const avatar = usuario.avatar ? `/api/usuarios/images/?idAlumno=${usuario.idUsuario}&idImagen=${usuario.avatar}` : '/avatar/avatar_placeholder.jpg'
-  const avatar = usuario.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${usuario.idUsuario}/perfil/` + usuario.avatar : '/avatar/avatar_placeholder.jpg'
+  const avatar = usuario.avatar
+    ? (process.env.NEXT_PUBLIC_BUCKET
+        ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${usuario.idUsuario}/perfil/` + usuario.avatar
+        : `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`
+      )
+    : '/avatar/avatar_placeholder.jpg'
 
   return (
     <section className='relative select-none'>

@@ -1,20 +1,20 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-// import { createReadStream } from 'node:fs'
-// import { NextResponse } from 'next/server'
+import { createReadStream } from 'node:fs'
+import { NextResponse } from 'next/server'
 // import { deleteFile } from '@/helpers/deleteFile'
 // import { uploadFile } from '@/helpers/uploadFile'
 // import { createDirIfNotExists } from '@/helpers/createDirIfNotExists'
-// import { join, extname } from 'node:path'
+import { join, extname } from 'node:path'
 import { deleteObject, uploadObject } from '@/helpers/bucketGCS'
 
-/* export async function GET (req) {
+export async function GET (req) {
   const session = await getServerSession(authOptions)
   if (!session) return Response.json({ error: true, description: 'Credenciales no válidas' })
   const searchParams = new URL(req.nextUrl).searchParams
   const idUsuario = searchParams.get('idUsuario')
   const idImagen = searchParams.get('idImagen')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/${idUsuario}/avatar`
+  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/${idUsuario}/perfil`
   const extension = extname(idImagen).replace('.', '')
   const absolutePath = join(path, idImagen)
   const readStream = createReadStream(absolutePath)
@@ -25,7 +25,7 @@ import { deleteObject, uploadObject } from '@/helpers/bucketGCS'
     })
   })
   return res
-} */
+}
 
 export async function POST (req) {
   const session = await getServerSession(authOptions)

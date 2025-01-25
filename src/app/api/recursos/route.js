@@ -2,10 +2,10 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
 // import { uploadFile } from '@/helpers/uploadFile'
-// import { join } from 'path'
-// import { createReadStream } from 'fs'
-// import { NextResponse } from 'next/server'
-// import Mime from 'mime'
+import { join } from 'path'
+import { createReadStream } from 'fs'
+import { NextResponse } from 'next/server'
+import Mime from 'mime'
 import { uploadObject } from '@/helpers/bucketGCS'
 
 export async function POST (req) {
@@ -26,7 +26,7 @@ export async function POST (req) {
   return Response.json(uploadResponse)
 }
 
-/* export async function GET (req) {
+export async function GET (req) {
   const session = await getServerSession(authOptions)
   if (!session) return Response.json({ error: true, description: 'Usuario no autenticado' })
   const url = req.nextUrl
@@ -34,9 +34,9 @@ export async function POST (req) {
   const idCurso = searchParams.get('idCurso')
   const idUnidad = searchParams.get('idUnidad')
   const idTema = searchParams.get('idTema')
-  const idDocente = searchParams.get('idDocente')
+  const idUsuario = searchParams.get('idUsuario')
   const baseName = searchParams.get('idRecurso')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/docentes/${idDocente}/cursos/${idCurso}/${idUnidad}/${idTema}`
+  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/${idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
   const absolutePath = join(path, baseName)
   const mimetype = Mime.getType(absolutePath)
   const readStream = createReadStream(absolutePath)
@@ -47,7 +47,7 @@ export async function POST (req) {
     })
   })
   return res
-} */
+}
 
 /* export async function DELETE (req) {
   const session = await getServerSession(authOptions)

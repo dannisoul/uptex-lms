@@ -6,11 +6,15 @@ import { InputDate } from '../forms/InputDate'
 import { ImageFileInput } from '../forms/ImageFileInput'
 
 export function InformacionPersonal ({ usuario, formData, errors, handleInputChange, handleSelectChange, rolImgURL }) {
-  // const avatarURL = usuario.avatar ? `/api/usuarios/images/?id${rolImgURL}=${usuario.idUsuario}&idImagen=${usuario.avatar}` : '/avatar/avatar_placeholder.jpg'
-  const avatarURL = usuario.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${usuario.idUsuario}/perfil/` + usuario.avatar : '/avatar/avatar_placeholder.jpg'
+  const avatar = usuario.avatar
+    ? (process.env.NEXT_PUBLIC_BUCKET
+        ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${usuario.idUsuario}/perfil/` + usuario.avatar
+        : `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`
+      )
+    : '/avatar/avatar_placeholder.jpg'
   return (
     <section className='flex lg:gap-20 gap-10 border-b-2 border-alpha-bg/20 pb-8 lg:flex-nowrap flex-wrap'>
-      <ImageFileInput name='avatar' preview={avatarURL} handleInputChange={handleInputChange} errors={errors.avatar} />
+      <ImageFileInput name='avatar' preview={avatar} handleInputChange={handleInputChange} errors={errors.avatar} />
       <div className='grid grid-cols-1 sm:grid-cols-2 items-center gap-x-4 gap-y-8 grow lg:basis-auto basis-[100%]'>
         <h3 className='sm:col-start-1 sm:col-end-3 font-semibold text-center sm:text-left text-secondary-accent text-xl dark:text-dark-secondary-accent'>Información Personal</h3>
         <InputText

@@ -3,9 +3,9 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../auth/[...nextauth]/route'
 import { uploadFile } from '@/helpers/uploadFile'
 // import { deleteFile } from '@/helpers/deleteFile'
-// import { extname, join } from 'node:path'
-// import { createReadStream } from 'node:fs'
-// import { NextResponse } from 'next/server'
+import { extname, join } from 'node:path'
+import { createReadStream } from 'node:fs'
+import { NextResponse } from 'next/server'
 import { deleteObject, uploadObject } from '@/helpers/bucketGCS'
 
 export async function POST (req) {
@@ -42,15 +42,15 @@ export async function PUT (req) {
   return Response.json(uploadReponse)
 }
 
-/* export async function GET (req) {
+export async function GET (req) {
   const session = await getServerSession(authOptions)
   if (!session) return Response.json({ error: true })
 
   const searchParams = new URL(req.nextUrl).searchParams
   const idCurso = searchParams.get('idCurso')
-  const idDocente = searchParams.get('idDocente')
+  const idUsuario = searchParams.get('idUsuario')
   const idImagen = searchParams.get('idImagen')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/docentes/${idDocente}/cursos/${idCurso}`
+  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/${idUsuario}/cursos/${idCurso}`
   const baseName = idImagen
   const extension = extname(baseName).replace('.', '')
   const absolutePath = join(path, baseName)
@@ -63,4 +63,3 @@ export async function PUT (req) {
   })
   return res
 }
- */

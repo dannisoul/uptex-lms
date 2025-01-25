@@ -69,7 +69,12 @@ export function AlumnosGrupo ({ grupo, toast, idGrupo }) {
           </thead>
           <tbody>
             {alumnos.map(alumno => {
-              const avatar = alumno.avatar ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms') + `/uploads/${alumno.idUsuario}/perfil/` + alumno.avatar : '/avatar/avatar_placeholder.jpg'
+              const avatar = alumno.avatar
+                ? (process.env.NEXT_PUBLIC_BUCKET
+                    ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${alumno.idUsuario}/perfil/` + alumno.avatar
+                    : `/api/usuarios/imagenes?idUsuario=${alumno.idUsuario}&idImagen=${alumno.avatar}`
+                  )
+                : '/avatar/avatar_placeholder.jpg'
               return (
                 <tr key={alumno.idUsuario} className='hover:bg-gray-100 dark:hover:bg-[#232325] rounded-xl'>
                   <td>
