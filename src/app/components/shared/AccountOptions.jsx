@@ -17,9 +17,12 @@ export function AccountOptions ({ usuario }) {
   const navbar = getNavbar(usuario.idRol)
   const { avatar } = useContext(UserContext)
 
-  const avatarURL = process.env.NEXT_PUBLIC_BUCKET
-    ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${usuario.idUsuario}/perfil/` + avatar
-    : `/api/usuarios/imagenes?idUsuario=${usuario?.idUsuario}&idImagen=${avatar}`
+  const avatarURL = usuario.avatar
+    ? (process.env.NEXT_PUBLIC_FOLDER
+        ? `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`
+        : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${usuario.idUsuario}/perfil/` + usuario.avatar
+      )
+    : '/avatar/avatar_placeholder.jpg'
 
   useEffect(() => {
     function hideAccountOptions (e) {

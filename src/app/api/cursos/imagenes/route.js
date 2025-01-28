@@ -15,7 +15,7 @@ export async function POST (req) {
   const formData = await req.formData()
   const file = formData.get('imagen')
   const idCurso = formData.get('idCurso')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/docentes/${session.user.idUsuario}/cursos/${idCurso}`
+  const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/docentes/${session.user.idUsuario}/cursos/${idCurso}`
   await createDirIfNotExists(path)
 
   const response = await uploadFile(file, path, true)
@@ -29,7 +29,7 @@ export async function PUT (req) {
   const newFile = formData.get('imagen')
   const oldFile = formData.get('fileToRemove')
   const idCurso = formData.get('idCurso')
-  // const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/${session.user.idUsuario}/cursos/${idCurso}`
+  // const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/${session.user.idUsuario}/cursos/${idCurso}`
   const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}`
   console.log(newFile, 'Archivo nuevo')
   console.log(oldFile, 'Archivo viejo')
@@ -50,7 +50,7 @@ export async function GET (req) {
   const idCurso = searchParams.get('idCurso')
   const idUsuario = searchParams.get('idUsuario')
   const idImagen = searchParams.get('idImagen')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/${idUsuario}/cursos/${idCurso}`
+  const path = `${process.env.NEXT_PUBLIC_FOLDER}/${idUsuario}/cursos/${idCurso}`
   const baseName = idImagen
   const extension = extname(baseName).replace('.', '')
   const absolutePath = join(path, baseName)

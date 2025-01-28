@@ -9,7 +9,7 @@ import { deleteObject } from '@/helpers/bucketGCS'
 export async function eliminarRecurso (recurso) {
   const session = await getServerSession(authOptions)
   if (!session) return { error: true, description: 'Credenciales no válidas' }
-  // const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/docentes/${session.user.idUsuario}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}`
+  // const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/docentes/${session.user.idUsuario}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}`
   const path = `uploads/${session.user.idUsuario}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}/${recurso.nombre}`
 
   const deleteResponse = await deleteObject(path)

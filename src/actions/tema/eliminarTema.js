@@ -9,7 +9,7 @@ import { deleteMultipleObjects } from '@/helpers/bucketGCS'
 export async function eliminarTema ({ idCurso, idUnidad, idTema }) {
   const session = await getServerSession(authOptions)
   if (!session) return { error: true, description: 'Credenciales no válidas' }
-  // const path = `${process.env.UPLOAD_FOLDER_PREFIX}/uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
+  // const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
   const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
   const deleteReponse = await deleteMultipleObjects(path)
   if (deleteReponse.error) return { error: true, errorCode: 'NO_DELETED', affectedRows: 0, deletedId: 0 }

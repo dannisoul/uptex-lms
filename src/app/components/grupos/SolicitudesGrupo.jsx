@@ -41,9 +41,9 @@ export function SolicitudesGrupo ({ grupo, toast }) {
           <tbody>
             {solicitudes.map(alumno => {
               const avatar = alumno.avatar
-                ? (process.env.NEXT_PUBLIC_BUCKET
-                    ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${alumno.idUsuario}/perfil/` + alumno.avatar
-                    : `/api/usuarios/imagenes?idUsuario=${alumno.idUsuario}&idImagen=${alumno.avatar}`
+                ? (process.env.NEXT_PUBLIC_FOLDER
+                    ? `/api/usuarios/imagenes?idUsuario=${alumno.idUsuario}&idImagen=${alumno.avatar}`
+                    : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${alumno.idUsuario}/perfil/` + alumno.avatar
                   )
                 : '/avatar/avatar_placeholder.jpg'
               return (

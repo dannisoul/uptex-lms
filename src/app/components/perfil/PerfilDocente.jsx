@@ -5,9 +5,9 @@ import Link from 'next/link'
 export function PerfilDocente ({ data }) {
   const { usuario, misHabilidades } = data
   const avatar = usuario.avatar
-    ? (process.env.NEXT_PUBLIC_BUCKET
-        ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${usuario.idUsuario}/perfil/` + usuario.avatar
-        : `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`
+    ? (process.env.NEXT_PUBLIC_FOLDER
+        ? `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`
+        : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${usuario.idUsuario}/perfil/` + usuario.avatar
       )
     : '/avatar/avatar_placeholder.jpg'
   return (

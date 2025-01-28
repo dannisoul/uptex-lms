@@ -43,14 +43,16 @@ export function CursoAlumno ({ curso, unidades = [], temas = [], grupos }) {
           </h2>
           <div className='grid cardContainer gap-8'>
             {grupos.map(grupo => {
+              const imagen = process.env.NEXT_PUBLIC_FOLDER
+                ? `/api/cursos/imagenes?idImagen=${grupo.imagen}&idUsuario=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
+                : `https://storage.googleapis.com/uptex_lms/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
               const avatar = grupo.avatar
-                ? (process.env.NEXT_PUBLIC_BUCKET
-                    ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${grupo.idUsuario}/perfil/${grupo.avatar}`
-                    : `/api/usuarios/imagenes?idUsuario=${grupo.idUsuario}&idImagen=${grupo.avatar}`)
+                ? (
+                    process.env.NEXT_PUBLIC_FOLDER
+                      ? `/api/usuarios/imagenes?idUsuario=${grupo.idUsuario}&idImagen=${grupo.avatar}`
+                      : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${grupo.idUsuario}/perfil/${grupo.avatar}`
+                  )
                 : '/mis_cursos/usuario.png'
-              const imagen = process.env.NEXT_PUBLIC_BUCKET
-                ? `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads'}/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
-                : `/api/cursos/imagenes?idImagen=${grupo.imagen}&idUsuario=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
               return (
                 <CursoCard
                   key={`${grupo.nombre}-${grupo?.idGrupo}`}

@@ -39,14 +39,16 @@ export function GruposDocente ({ initialGrupos, user, toast, cursos }) {
       <section className='grid cardContainer gap-8 place-content-center mt-16'>
         <NuevoCurso handleClick={handleModal} title='Nuevo Grupo' title2='Crea un nuevo grupo' />
         {grupos.map((grupo, index) => {
+          const imagen = process.env.NEXT_PUBLIC_FOLDER
+            ? `/api/cursos/imagenes?idImagen=${grupo.imagen}&idUsuario=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
+            : `https://storage.googleapis.com/uptex_lms/uploads/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
           const avatar = grupo.avatar
-            ? (process.env.NEXT_PUBLIC_BUCKET
-                ? (process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads') + `/${grupo.idUsuario}/perfil/${grupo.avatar}`
-                : `/api/usuarios/imagenes?idUsuario=${grupo.idUsuario}&idImagen=${grupo.avatar}`)
+            ? (
+                process.env.NEXT_PUBLIC_FOLDER
+                  ? `/api/usuarios/imagenes?idUsuario=${grupo.idUsuario}&idImagen=${grupo.avatar}`
+                  : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${grupo.idUsuario}/perfil/${grupo.avatar}`
+              )
             : '/mis_cursos/usuario.png'
-          const imagen = process.env.NEXT_PUBLIC_BUCKET
-            ? `${process.env.NEXT_PUBLIC_BUCKET || 'https://storage.googleapis.com/uptex_lms/uploads'}/${grupo.idUsuario}/cursos/${grupo.idCurso}/${grupo.imagen}`
-            : `/api/cursos/imagenes?idImagen=${grupo.imagen}&idUsuario=${(grupo.idUsuario)}&idCurso=${grupo.idCurso}`
           if (index === grupos.length - 1) {
             return (
               <div key={`${grupo?.nombre}-${grupo?.idGrupo}`} ref={lastElementRef}>

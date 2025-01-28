@@ -14,7 +14,7 @@ export async function GET (req) {
   const searchParams = new URL(req.nextUrl).searchParams
   const idUsuario = searchParams.get('idUsuario')
   const idImagen = searchParams.get('idImagen')
-  const path = `${process.env.UPLOAD_FOLDER_PREFIX}/${idUsuario}/perfil`
+  const path = `${process.env.NEXT_PUBLIC_FOLDER}/${idUsuario}/perfil`
   const extension = extname(idImagen).replace('.', '')
   const absolutePath = join(path, idImagen)
   const readStream = createReadStream(absolutePath)
