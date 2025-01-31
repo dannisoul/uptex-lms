@@ -2,7 +2,6 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { Tema } from '@/models/Tema'
-// import { removeDir } from '@/helpers/removeDir'
 import { revalidatePath } from 'next/cache'
 import { deleteMultipleObjects } from '@/helpers/bucketGCS'
 

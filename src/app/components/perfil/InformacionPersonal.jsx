@@ -5,7 +5,7 @@ import Select from '../forms/Select'
 import { InputDate } from '../forms/InputDate'
 import { ImageFileInput } from '../forms/ImageFileInput'
 
-export function InformacionPersonal ({ usuario, formData, errors, handleInputChange, handleSelectChange, rolImgURL }) {
+export function InformacionPersonal ({ usuario, formData, errors, handleInputChange, handleSelectChange }) {
   const avatar = usuario.avatar
     ? (process.env.NEXT_PUBLIC_FOLDER
         ? `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`

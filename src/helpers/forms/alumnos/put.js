@@ -22,8 +22,8 @@ export async function put (prevFormData, formData, toast, updatePrevFormData, se
     })
 
     if (hasAvatarChange) {
-      newFormData.append('fileToRemove', oldData.avatar)
-      const fileResponse = await fetch(`${(process.env.NEXT_PUBLIC_URL) || 'https://uptex-lms-765271791469.us-central1.run.app'}/api/usuarios/images`, {
+      newFormData.append('fileToRemove', oldData.avatar?.name ?? oldData.avatar)
+      const fileResponse = await fetch('/api/usuarios/imagenes', {
         method: 'POST',
         body: newFormData
       })

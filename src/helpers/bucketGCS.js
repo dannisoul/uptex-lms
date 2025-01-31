@@ -13,8 +13,8 @@ export async function uploadObject (file, path, options) {
   try {
     if (options?.optimizeImage) {
       const optimizedImage = await optimizeImage(buffer)
-      await storage.bucket('uptex_lms').file(path + '/' + fileName + '.webp').save(optimizedImage)
-      return { error: false, baseName: fileName + '.webp', description: `Archivo: ${baseName} guardado correctamente` }
+      await storage.bucket('uptex_lms').file(path + '/' + baseName).save(optimizedImage)
+      return { error: false, baseName, description: `Archivo: ${baseName} guardado correctamente` }
     } else {
       await storage.bucket('uptex_lms').file(path + '/' + baseName).save(buffer)
       return { error: false, baseName, description: `Archivo: ${baseName} guardado correctamente` }

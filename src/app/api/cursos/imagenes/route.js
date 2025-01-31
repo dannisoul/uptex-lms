@@ -1,45 +1,37 @@
-import { createDirIfNotExists } from '@/helpers/createDirIfNotExists'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../../auth/[...nextauth]/route'
-import { uploadFile } from '@/helpers/uploadFile'
-// import { deleteFile } from '@/helpers/deleteFile'
 import { extname, join } from 'node:path'
 import { createReadStream } from 'node:fs'
 import { NextResponse } from 'next/server'
 import { deleteObject, uploadObject } from '@/helpers/bucketGCS'
+import { createDirIfNotExists, deleteFile, uploadFile } from '@/helpers/fileSystem'
 
 export async function POST (req) {
   const session = await getServerSession(authOptions)
   if (!session) return Response.json({ error: true })
-
   const formData = await req.formData()
-  const file = formData.get('imagen')
-  const idCurso = formData.get('idCurso')
-  const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/docentes/${session.user.idUsuario}/cursos/${idCurso}`
-  await createDirIfNotExists(path)
-
-  const response = await uploadFile(file, path, true)
-  return Response.json(response)
-}
-
-export async function PUT (req) {
-  const session = await getServerSession(authOptions)
-  if (!session) return Response.json({ error: true })
-  const formData = await req.formData()
+  const idUsuario = session.user.idUsuario
   const newFile = formData.get('imagen')
   const oldFile = formData.get('fileToRemove')
   const idCurso = formData.get('idCurso')
-  // const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/${session.user.idUsuario}/cursos/${idCurso}`
-  const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}`
-  console.log(newFile, 'Archivo nuevo')
-  console.log(oldFile, 'Archivo viejo')
+  const path = process.env.NEXT_PUBLIC_FOLDER
+    ? process.env.NEXT_PUBLIC_FOLDER + `/${idUsuario}/cursos/${idCurso}`
+    : `uploads/${idUsuario}/cursos/${idCurso}`
   if (oldFile) {
-    // await deleteFile(path)
-    await deleteObject(path + '/' + oldFile)
+    if (process.env.NEXT_PUBLIC_FOLDER) {
+      await deleteFile(path, oldFile)
+    } else {
+      await deleteObject(path + '/' + oldFile)
+    }
   }
-  // const response = await uploadFile(newFile, path, true)
-  const uploadReponse = await uploadObject(newFile, path, { optimizeImage: true })
-  return Response.json(uploadReponse)
+  let uploadResponse = null
+  if (process.env.NEXT_PUBLIC_FOLDER) {
+    await createDirIfNotExists(path)
+    uploadResponse = await uploadFile(newFile, path, { optimizeImage: true })
+  } else {
+    uploadResponse = await uploadObject(newFile, path, { optimizeImage: true })
+  }
+  return Response.json(uploadResponse)
 }
 
 export async function GET (req) {

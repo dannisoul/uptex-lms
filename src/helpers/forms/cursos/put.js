@@ -41,10 +41,9 @@ export async function put (
     if (fileHasChanged) {
       newFormData.append('fileToRemove', initialState.imagen)
       newFormData.append('idCurso', idCurso)
-      const fileResponse = await fetch(
-        `${(process.env.NEXT_PUBLIC_URL) || 'https://uptex-lms-765271791469.us-central1.run.app'}/api/cursos/images`,
+      const fileResponse = await fetch('/api/cursos/imagenes',
         {
-          method: 'PUT',
+          method: 'POST',
           body: newFormData
         }
       )
@@ -68,7 +67,7 @@ export async function put (
     handleModal()
   } catch (error) {
     console.log(error)
-    toast.error('Error al crear el curso, intenta más tarde')
+    toast.error('Error al editar el curso, intenta más tarde')
   } finally {
     setPending(false)
   }
