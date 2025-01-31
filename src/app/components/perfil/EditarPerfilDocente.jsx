@@ -29,7 +29,6 @@ export function EditarPerfilDocente ({ data, toast }) {
   return (
     <form onSubmit={handleSubmit}>
       <InformacionPersonal
-        rolImgURL='Docente'
         usuario={data.usuario}
         formData={formData}
         errors={errors}

@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { useEffect, useState, useContext } from 'react'
 import { userDarkMode } from '@/hooks/useDarkMode'
 import { signOut } from 'next-auth/react'
-import { DocenteNavbar2 } from './DocenteNavbar2'
-import { AlumnoNavBar2 } from './AlumnoNavbar2'
+import { DocenteOptions } from './DocenteOptions'
+import { AlumnoOptions } from './AlumnoOptions'
 
 import { UserContext } from '@/providers/UserProvider'
 
@@ -14,13 +14,13 @@ export function AccountOptions ({ usuario }) {
   const [display, setDisplay] = useState(false)
   const { darkMode, handleDarkModeChange } = userDarkMode()
   const [pending, setPending] = useState(false)
-  const navbar = getNavbar(usuario.idRol)
+  const navbar = getOptions(usuario.idRol)
   const { avatar } = useContext(UserContext)
 
   const avatarURL = usuario.avatar
     ? (process.env.NEXT_PUBLIC_FOLDER
-        ? `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${usuario.avatar}`
-        : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${usuario.idUsuario}/perfil/` + usuario.avatar
+        ? `/api/usuarios/imagenes?idUsuario=${usuario.idUsuario}&idImagen=${avatar}`
+        : 'https://storage.googleapis.com/uptex_lms/uploads' + `/${usuario.idUsuario}/perfil/` + avatar
       )
     : '/avatar/avatar_placeholder.jpg'
 
@@ -96,16 +96,16 @@ export function AccountOptions ({ usuario }) {
   )
 }
 
-function getNavbar (rol) {
+function getOptions (rol) {
   switch (rol) {
     case 1:{
       return null
     }
     case 2:{
-      return <DocenteNavbar2 />
+      return <DocenteOptions />
     }
     case 3:{
-      return <AlumnoNavBar2 />
+      return <AlumnoOptions />
     }
   }
 }

@@ -27,10 +27,9 @@ export async function post (
     newFormData.append('idCurso', response.insertId)
 
     // con el id del curso crea la carpeta y guarda la imagen del curso
-    const fileResponse = await fetch(
-      `${(process.env.NEXT_PUBLIC_URL) || 'https://uptex-lms-765271791469.us-central1.run.app'}/api/cursos/images`,
+    const fileResponse = await fetch('/api/cursos/imagenes',
       {
-        method: 'PUT',
+        method: 'POST',
         body: newFormData
       }
     )
@@ -45,7 +44,6 @@ export async function post (
     // si la imagen se guarda correctamente actualiza la referencia de la imagen en al base de datos
     const updatedResponse = await registrarImagen(newFormData)
     if (response.error) throw new Error(response.errorCode)
-    console.log(updatedResponse.newRecord)
     updateCursos({ type: 'addCurso', payload: updatedResponse.newRecord })
     toast.success('Curso creado correctamente')
     handleModal()

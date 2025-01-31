@@ -1,12 +1,11 @@
-// import { createDirIfNotExists } from '@/helpers/createDirIfNotExists'
+import { createDirIfNotExists, uploadFile, deleteFile } from '@/helpers/fileSystem'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
-// import { uploadFile } from '@/helpers/uploadFile'
 import { join } from 'path'
 import { createReadStream } from 'fs'
 import { NextResponse } from 'next/server'
 import Mime from 'mime'
-import { uploadObject } from '@/helpers/bucketGCS'
+import { uploadObject, deleteObject } from '@/helpers/bucketGCS'
 
 export async function POST (req) {
   const session = await getServerSession(authOptions)
@@ -17,12 +16,18 @@ export async function POST (req) {
   const idCurso = formData.get('idCurso')
   const idUnidad = formData.get('idUnidad')
   const idTema = formData.get('idTema')
-  // const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
-  const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
 
-  const uploadResponse = await uploadObject(file, path)
-  // await createDirIfNotExists(path)
-  // const uploadResponse = await uploadFile(file, path)
+  const path = process.env.NEXT_PUBLIC_FOLDER
+    ? `${process.env.NEXT_PUBLIC_FOLDER}/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
+    : `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}`
+
+  let uploadResponse = null
+  if (process.env.NEXT_PUBLIC_FOLDER) {
+    await createDirIfNotExists(path)
+    uploadResponse = await uploadFile(file, path)
+  } else {
+    uploadResponse = await uploadObject(file, path)
+  }
   return Response.json(uploadResponse)
 }
 
@@ -49,7 +54,7 @@ export async function GET (req) {
   return res
 }
 
-/* export async function DELETE (req) {
+export async function DELETE (req) {
   const session = await getServerSession(authOptions)
   if (!session.user) return Response.json({ error: true, description: 'Usuario no autenticado' })
 
@@ -59,12 +64,16 @@ export async function GET (req) {
   const idUnidad = searchParams.get('idUnidad')
   const idTema = searchParams.get('idTema')
   const file = searchParams.get('recurso')
-  const path = `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}/${file}`
+  const path = process.env.NEXT_PUBLIC_FOLDER
+    ? `${process.env.NEXT_PUBLIC_FOLDER}/${session.idUsuario}/${idCurso}/${idUnidad}/${idTema}`
+    : `uploads/${session.user.idUsuario}/cursos/${idCurso}/${idUnidad}/${idTema}/${file}`
 
-  const deleteResponse = await deleteObject(path)
+  let deleteResponse = null
 
+  if (process.env.NEXT_PUBLIC_FOLDER) {
+    deleteResponse = await deleteFile(path, file)
+  } else {
+    deleteResponse = await deleteObject(path)
+  }
   return Response.json(deleteResponse)
-
-  // const path = `${process.env.NEXT_PUBLIC_FOLDER}/uploads/${session.user.idUsuario}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}`
 }
- */

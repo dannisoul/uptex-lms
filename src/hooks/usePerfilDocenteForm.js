@@ -1,4 +1,4 @@
-import { put } from '@/helpers/forms/usuarios/put'
+import { put } from '@/helpers/forms/docentes/put'
 import { UserContext } from '@/providers/UserProvider'
 import { validarAvatar } from '@/validators/usuario/avatar'
 import validarCorreo from '@/validators/usuario/correo'
