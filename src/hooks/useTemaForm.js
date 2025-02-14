@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import validarNombre from '@/validators/tema/nombre'
-import validarNp from '@/validators/tema/np'
-import validarDescripcion from '@/validators/tema/descripcion'
+import { validarNombre, validarDescripcion, validarNp } from '@/validators/tema'
 import { post } from '@/helpers/forms/temas/post'
 import { put } from '@/helpers/forms/temas/put'
 

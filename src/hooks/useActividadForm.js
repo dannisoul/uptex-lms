@@ -1,44 +1,41 @@
-import { useEffect, useState } from 'react'
-import { validarNombre, validarCategoria, validarCursoInterno, validarDescripcion, validarImagen, validarNivel } from '@/validators/curso'
-import { post } from '@/helpers/forms/cursos/post'
-import { put } from '@/helpers/forms/cursos/put'
+import { post } from '@/helpers/forms/actividad/post'
+import { validarExtemporaneo, validarFechaCierre, validarIndicaciones, validarNombre, validarPuntaje, validarTipo } from '@/validators/actividad'
+import { useState } from 'react'
 
 const INITIAL_STATE = {
   nombre: '',
-  descripcion: '',
-  idCategoria: { name: 'Selecciona una categoría', value: '' },
-  idNivel: { name: 'Selecciona el nivel', value: '' },
-  cursoInterno: false,
-  imagen: ''
+  tipo: { name: 'Selecciona un tipo de actividad', value: '' },
+  indicaciones: '',
+  fecha_cierre: '',
+  extemporaneo: false,
+  puntaje: ''
 }
 
-export function useCursoForm ({ handleModal, updateCursos, toast, action, formState, categorias, niveles, idCurso, updateCurso }) {
+export function useActividadForm ({ handleModal, action, formState, tipos, idGrupo, idActividad, updateActividades }) {
   const initialState = formState || INITIAL_STATE
 
   const [formData, setFormData] = useState(initialState)
-  const [errors, setErrors] = useState({ ...INITIAL_STATE, idCategoria: '', idNivel: '', cursoInterno: '' })
+  const [errors, setErrors] = useState({ ...INITIAL_STATE, tipo: '', extemporaneo: '', puntaje: '' })
   const [pending, setPending] = useState(false)
 
   /* con esto se va a setear bien el valor del select y ya detectara los cambios entre el initialstate y el formdata que actualices */
 
   /* luego en este useEffect seteamos el idCategoria y idNivel del formData en el select */
-  useEffect(() => {
+  /* useEffect(() => {
     if (formState) {
-      /* destructuras el formdata y setea el idCategoria y idNivel del formData en el select  */
       const newState = { ...formData }
-      /* y luego buscas entre las categorias y niveles el que coincida con el id del formData   */
       newState.idCategoria = (formState ? categorias.find(categoria => categoria.value === initialState.idCategoria) : formState.idCategoria)
       newState.idNivel = (formState ? niveles.find(nivel => nivel.value === initialState.idNivel) : formState.idNivel)
       setFormData(newState)
     }
-  }, [])
+  }, []) */
 
   async function handleSubmit (e) {
     e.preventDefault()
 
     if (checkErrors()) return
-    if (action.toLowerCase() === 'post') await post(formData, setPending, handleModal, toast, updateCursos)
-    if (action.toLowerCase() === 'put') await put(formData, idCurso, setPending, handleModal, toast, updateCurso, initialState)
+    if (action.toLowerCase() === 'post') await post(formData, setPending, handleModal, updateActividades, idGrupo)
+    // if (action.toLowerCase() === 'put') await put(formData, idActividad, idCurso, setPending, handleModal, toast, updateCurso, initialState)
   }
 
   function handleInputChange (e) {
@@ -51,19 +48,24 @@ export function useCursoForm ({ handleModal, updateCursos, toast, action, formSt
         error = validarNombre(value)
         break
       }
-      case 'descripcion': {
+      case 'indicaciones': {
         value = e.target.value
-        error = validarDescripcion(value)
+        error = validarIndicaciones(value)
         break
       }
-      case 'cursoInterno': {
+      case 'extemporaneo': {
         value = e.target.checked
-        error = validarCursoInterno(value)
+        error = validarExtemporaneo(value)
         break
       }
-      case 'imagen': {
-        value = e.target.files[0]
-        error = validarImagen(value)
+      case 'puntaje': {
+        value = e.target.value
+        error = validarPuntaje(value)
+        break
+      }
+      case 'fecha_cierre': {
+        value = e.target.value
+        error = validarFechaCierre(value)
         break
       }
       default:
@@ -86,12 +88,8 @@ export function useCursoForm ({ handleModal, updateCursos, toast, action, formSt
     let error = ''
 
     switch (target) {
-      case 'idCategoria': {
-        error = validarCategoria(value)
-        break
-      }
-      case 'idNivel': {
-        error = validarNivel(value)
+      case 'tipo': {
+        error = validarTipo(value)
         break
       }
       default:
@@ -111,7 +109,7 @@ export function useCursoForm ({ handleModal, updateCursos, toast, action, formSt
 
   function checkErrors () {
     const newErrors = { ...errors }
-    const data = { ...formData, idCategoria: formData.idCategoria.value, idNivel: formData.idNivel.value }
+    const data = { ...formData, tipo: formData.tipo.value }
     Object.entries(data).forEach(([entry, value]) => {
       if (value === '') newErrors[entry] = 'Campo requerido'
     })
