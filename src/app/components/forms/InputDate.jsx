@@ -1,6 +1,6 @@
 'use client'
 
-export function InputDate ({ id, name, placeholder, icon, value, onChange, errors }) {
+export function InputDate ({ id, name, placeholder, icon, value, onChange, errors, time = false }) {
   const textClass = (value) ? 'text-black dark:text-white' : 'text-[#9ca3af]'
   return (
     <div
@@ -12,7 +12,7 @@ export function InputDate ({ id, name, placeholder, icon, value, onChange, error
       <input
         id={id}
         name={name}
-        type='date'
+        type={time ? 'datetime-local' : 'date'}
         onClick={(e) => {
           e.target.showPicker()
         }}
@@ -21,7 +21,7 @@ export function InputDate ({ id, name, placeholder, icon, value, onChange, error
         onChange={onChange}
         value={value}
       />
-      <span className={'absolute left-4 top-[50%] translate-y-[-50%] pointer-events-none ' + textClass}>
+      <span className={'absolute left-4 top-[50%] translate-y-[-50%] pointer-events-none text-sm ' + textClass}>
         {value || placeholder}
       </span>
       {errors &&

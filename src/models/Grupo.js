@@ -237,7 +237,7 @@ export class Grupo {
       const values = [idGrupo]
       const [counter] = await connection.execute('SELECT COUNT(*) as total FROM inscripcion WHERE idGrupo = ?', [idGrupo])
       const [alumnos] = await connection.execute(sql, values)
-      return { error: false, errorCode: null, alumnos, totalPages: Math.ceil(counter[0].total / limit) }
+      return { error: false, errorCode: null, data: alumnos, totalPages: Math.ceil(counter[0].total / limit) }
     } catch (error) {
       console.log(error)
       return { error: true, errorCode: error.code, alumnos: null }

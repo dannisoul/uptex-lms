@@ -75,7 +75,7 @@ export function GrupoDocente ({
           >
             <option value='1'>Unidades</option>
             <option value='2'>Alumnos</option>
-            <option value='3'>Asignaciones</option>
+            <option value='3'>Actividades</option>
             <option value='4'>Solicitudes</option>
           </select>
           <div className='max-w-[170px] sm:block hidden'>
@@ -127,7 +127,7 @@ export function GrupoDocente ({
               className='cursor-pointer text-center text-sm md:text-base dark:text-white select-none peer-checked:font-semibold peer-checked:bg-white peer-checked:dark:bg-dark-secondary-bg peer-checked:shadow-lg peer-checked:text-black peer-checked:dark:text-white px-4 py-2 peer-checked:rounded-full font-medium transition-all'
               htmlFor='inlineRadio3'
             >
-              Asignaciones
+              Actividades
             </label>
           </div>
           <div className='max-w-[170px] sm:block hidden'>

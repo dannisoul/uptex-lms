@@ -1,11 +1,6 @@
 import { useState } from 'react'
-import validarNombre from '@/validators/usuario/nombre'
-import validarGenero from '@/validators/usuario/genero'
-import validarCorreo from '@/validators/usuario/correo'
-import validarContrasena from '@/validators/usuario/contrasena'
-import validarContrasena2 from '@/validators/usuario/contrasena2'
-import validarNacimiento from '@/validators/usuario/nacimiento'
 import { crearUsuario } from '@/actions/usuario/crear'
+import { validarNombre, validarGenero, validarCorreo, validarContrasena, validarContrasena2, validarNacimiento } from '@/validators/usuario'
 
 const INITIAL_STATE = {
   paterno: '',

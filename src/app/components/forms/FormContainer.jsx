@@ -7,7 +7,7 @@ export function FormContainer ({ children, submitText, formTitle, setVisible, on
           <header className='border-b-2 border-alpha-bg/20 pb-4'>
             <h2 className='text-2xl font-bold text-secondary-accent dark:text-white'>{formTitle || 'Formulario'}</h2>
           </header>
-          <div className='my-4 grid grid-cols-1 gap-8 max-h-[55dvh] overflow-y-auto scroll-hidden p-1'>
+          <div className='my-4 grid grid-cols-1 gap-8 max-h-[60dvh] overflow-y-auto scroll-hidden p-1'>
             {children}
           </div>
           <footer className='flex gap-4 pt-4 items-center border-t-2 border-alpha-bg/20'>

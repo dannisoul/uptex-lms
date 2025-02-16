@@ -1,11 +1,4 @@
-import { validarAudio } from '@/validators/recurso/audio'
-import { validarDoc } from '@/validators/recurso/doc'
-import { validarImagen } from '@/validators/recurso/imagen'
-import { validarPdf } from '@/validators/recurso/pdf'
-import { validarPresentacion } from '@/validators/recurso/ppt'
-import { validarTextoPlano } from '@/validators/recurso/txt'
-import { validarVideo } from '@/validators/recurso/video'
-import { validarHojaDeCalculo } from '@/validators/recurso/xls'
+import { validarAudio, validarDoc, validarHojaDeCalculo, validarImagen, validarPdf, validarPresentacion, validarTextoPlano, validarVideo } from '@/validators/recurso'
 import { useState } from 'react'
 import { post } from '@/helpers/forms/recursos/post'
 

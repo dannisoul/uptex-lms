@@ -10,6 +10,8 @@ import { Paginacion } from '../shared/Paginacion'
 import { usePaginacion } from '@/hooks/usePaginacion'
 import { ActionButton } from '../shared/ActionButton'
 import { IconLoading } from '../icons/IconsFIlled'
+import { obtenerAlumnosPorGrupo } from '@/actions/grupos/obtenerAlumnosPorGrupo'
+
 import Link from 'next/link'
 
 export function AlumnosGrupo ({ grupo, toast, idGrupo }) {
@@ -19,7 +21,7 @@ export function AlumnosGrupo ({ grupo, toast, idGrupo }) {
   const [nombreAlumno, setNombreAlumno] = useState()
   const [correoAlumno, setCorreoAlumno] = useState('')
   const { handleSubmit } = useCorreoAlumno(correoAlumno, idGrupo, toast, updateAlumnos, setCorreoAlumno)
-  const { totalPage, page, updatePage, loading } = usePaginacion({ updateAlumnos, idGrupo })
+  const { totalPage, page, updatePage, loading } = usePaginacion({ action: obtenerAlumnosPorGrupo, idToFilter: grupo.idGrupo, updateState: updateAlumnos })
 
   function handleObtenerCorreo (e) {
     setCorreoAlumno(e.target.value)

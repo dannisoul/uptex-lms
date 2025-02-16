@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import validarNombre from '@/validators/grupo/nombre'
 import { post } from '@/helpers/forms/grupos/post'
 import { put } from '@/helpers/forms/grupos/put'
 import { generarCodigo } from '@/helpers/generarCodigo'
-import validarCurso from '@/validators/grupo/curso'
-import validarInicio from '@/validators/grupo/inicio'
-import validarCierre from '@/validators/grupo/cierre'
+
+import { validarNombre, validarCierre, validarCurso, validarInicio } from '@/validators/grupo'
 
 const INITIAL_STATE = {
   nombre: '',

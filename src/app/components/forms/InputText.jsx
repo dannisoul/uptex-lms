@@ -1,4 +1,4 @@
-export function InputText ({ id, name, type, value, placeholder, icon, required, onChange, errors, className, disabled }) {
+export function InputText ({ id, name, type, value, placeholder, icon, required, onChange, errors, className, disabled, defaultValue }) {
   const handleChange = onChange || null
   return (
     <div className='flex relative w-full'>
@@ -12,6 +12,7 @@ export function InputText ({ id, name, type, value, placeholder, icon, required,
         onChange={handleChange}
         autoComplete='off'
         disabled={disabled}
+        defaultValue={defaultValue}
         className={'bg-alpha-bg/20 text-base dark:text-white p-4 rounded-lg outline-none w-full pr-12 focus:outline-none  focus-visible:ring-2 focus-visible:ring-white/0 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-accent ' + className}
       />
       <div
