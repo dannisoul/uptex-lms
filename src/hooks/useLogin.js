@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import validarCorreo from '@/validators/usuario/correo'
-import validarContrasena from '@/validators/usuario/contrasena'
+import { validarCorreo, validarContrasena } from '@/validators/usuario'
 import { signIn } from 'next-auth/react'
 const INITIAL_STATE = {
   correo: '',

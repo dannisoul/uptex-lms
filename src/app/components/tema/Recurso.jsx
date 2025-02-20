@@ -8,11 +8,11 @@ export function Recurso ({ recurso, handleDeleteRecurso, updateRecurso, deletePe
     : `https://storage.googleapis.com/uptex_lms/uploads/${recurso.idDocente}/cursos/${recurso.idCurso}/${recurso.idUnidad}/${recurso.idTema}/${recurso.ruta}`
   return (
     <li className='px-4 py-2 flex items-center justify-between gap-2 border-b hover:bg-alpha-bg/20 dark:bg-dark-tertiary-bg dark:text-white dark:border-b-alpha-bg/20 transition-all'>
-      <div className='flex items-center gap-4'>
+      <div className='flex items-center gap-4 max-w-[60%]'>
         <div>
           {icon}
         </div>
-        <span className='line-clamp-1'>
+        <span className='line-clamp-1 break-words'>
           {recurso.nombre}
         </span>
       </div>
@@ -34,12 +34,15 @@ export function Recurso ({ recurso, handleDeleteRecurso, updateRecurso, deletePe
           }
         {
           viewPermission &&
-            <ActionButton
-              onClick={() => {
-                updateFile({ nombre: recurso.nombre, path, mimeType: recurso.mimetype })
-                handleView && handleView()
-              }} icon={<IconEye />}
-            />
+            <div className='md:block hidden'>
+              <ActionButton
+                onClick={() => {
+                  updateFile({ nombre: recurso.nombre, path, mimeType: recurso.mimetype })
+                  handleView && handleView()
+                }} icon={<IconEye />}
+              />
+            </div>
+
           }
       </div>
     </li>
