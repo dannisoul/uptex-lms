@@ -45,4 +45,19 @@ export class Actividad {
       if (connection) connection.release()
     }
   }
+
+  static async actividadPorId (idActividad) {
+    let connection = null
+    try {
+      connection = await getConnection()
+      const sql = 'SELECT * FROM actividad WHERE idActividad = ?'
+      const [actividad] = await connection.execute(sql, [idActividad])
+      return { error: false, errorCode: null, actividad: actividad[0] }
+    } catch (error) {
+      console.log(error)
+      return { error: true, errorCode: error.code, actividad: null }
+    } finally {
+      if (connection) connection.release()
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { useModal } from '@/hooks/useModal'
 import { ButtonIcon } from '../shared/IconButton'
-import { IconNotebook, IconTrash } from '@tabler/icons-react'
+import { IconEye, IconNotebook, IconTrash } from '@tabler/icons-react'
 import { Actividad } from '../modals/Actividad'
 import { useActividades } from '@/hooks/useActividades'
 import { usePaginacion } from '@/hooks/usePaginacion'
@@ -48,14 +48,13 @@ export function AsignacionesGrupo ({ grupo }) {
             </thead>
             <tbody>
               {actividades.map(actividad => {
+                const href = actividad.tipo === 1 ? `/asignaciones/${actividad.idActividad}` : `/cuestionarios/${actividad.idActividad}`
                 console.log(actividad.fecha_cierre.toISOString().substring(0, 10))
                 return (
                   <tr key={`actividad-${actividad.idActividad}`} className='hover:bg-gray-100 dark:hover:bg-[#232325] rounded-xl'>
                     <td className='text-sm dark:text-white p-2 pl-4'>{actividad.nombre}</td>
                     <td className='text-sm md:table-cell hidden dark:text-white py-2'>
-                      {
-                        actividad.tipo === 1 ? 'Asignación' : 'Cuestionario'
-                      }
+                      {actividad.tipo === 1 ? 'Asignación' : 'Cuestionario'}
                     </td>
                     <td className='text-sm py-2 dark:text-white'>
                       {actividad.fecha_cierre.toISOString().substring(0, 10)}
@@ -69,12 +68,18 @@ export function AsignacionesGrupo ({ grupo }) {
                       }
                     </td>
                     <td className='text-sm py-2 dark:text-white'>
-                      <div className='mx-auto w-fit'>
+                      <div className='mx-auto w-fit flex gap-2'>
                         <ActionButton
                           icon={<IconTrash />}
                           onClick={() => {
                           }}
                         />
+                        <a href={href}>
+                          <ActionButton
+                            icon={<IconEye />}
+
+                          />
+                        </a>
                       </div>
                     </td>
                   </tr>
