@@ -1,8 +1,7 @@
 import { actividadPorId } from '@/actions/actividad/actividadPorId'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { EntregasAsignacionAlumno } from '@/app/components/actividades/EntregasAsignacionAlumno'
-import { EntregasAsignacionesDocente } from '@/app/components/actividades/EntregasAsignacionesDocente'
-import { PageOptions } from '@/app/components/shared/PageOptions'
+import { AsignacionAlumno } from '@/app/components/asignaciones/AsignacionAlumno'
+import { AsignacionDocente } from '@/app/components/asignaciones/AsignacionDocente'
 import { Toast } from '@/app/components/shared/Toaster'
 import { getDeadline } from '@/helpers/Date'
 import { getServerSession } from 'next-auth'
@@ -10,7 +9,7 @@ import { getServerSession } from 'next-auth'
 export default async function AsignacionPage ({ params }) {
   const { user } = await getServerSession(authOptions)
   const { actividad } = await actividadPorId(params.id)
-  console.log(actividad)
+
   return (
     <main className='customSection max-w-[1200px] w-11/12 mx-auto pt-[120px] sm:pt-[150px] mb-16'>
       <section className=''>
@@ -27,24 +26,16 @@ export default async function AsignacionPage ({ params }) {
           </div>
         </header>
         <p style={{ whiteSpace: 'pre-wrap' }} className='mt-8 dark:text-dark-primary-text dark:font-medium sm:text-base text-sm'>{actividad.indicaciones}</p>
-        {
-          user.idRol === 2 &&
-            <div className='flex justify-end mt-2'>
-              <PageOptions
-                text='Opciones de Asignación'
-              />
-            </div>
-        }
 
         {
-          user.idRol === 2 && <EntregasAsignacionesDocente entregas={[]} />
-        }
+          user.idRol === 2
+            ? <AsignacionDocente asignacion={actividad} />
+            : <AsignacionAlumno />
 
-        {
-          user.idRol === 3 && <EntregasAsignacionAlumno entregas={[]} />
         }
 
       </section>
+
       <Toast />
     </main>
   )

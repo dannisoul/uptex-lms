@@ -150,7 +150,7 @@ export function GrupoDocente ({
         </div>
         <div>
           <PageOptions
-            text='Opciones del curso'
+            text='Opciones del grupo'
             handleEdit={handleModalEditarGrupo}
             handleDelete={handleModalEliminarGrupo}
           />
