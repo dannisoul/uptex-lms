@@ -5,8 +5,9 @@ import { InputDate } from '../forms/InputDate'
 import { InputText } from '../forms/InputText'
 import Select from '../forms/Select'
 import { TextArea } from '../forms/TextArea'
+import Tipos from '@/mocks/TipoActividad.json'
 
-export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle, submitText, action }) {
+export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle, submitText, action, formState }) {
   const {
     errors,
     formData,
@@ -14,7 +15,7 @@ export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle,
     handleSelectChange,
     handleSubmit,
     pending
-  } = useActividadForm({ idGrupo, action, updateActividades, handleModal })
+  } = useActividadForm({ idGrupo, action, updateActividades, handleModal, formState })
 
   return (
     <FormContainer
@@ -37,10 +38,7 @@ export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle,
         onChange={handleInputChange}
       />
       <Select
-        options={[
-          { value: 1, name: 'Asignación' },
-          { value: 2, name: 'Cuestionario' }
-        ]}
+        options={Tipos}
         selectedClassName='text-sm'
         optionsClassName='text-sm'
         name='tipo'

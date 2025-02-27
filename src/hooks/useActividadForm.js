@@ -1,6 +1,7 @@
 import { post } from '@/helpers/forms/actividad/post'
 import { validarExtemporaneo, validarFechaCierre, validarIndicaciones, validarNombre, validarPuntaje, validarTipo } from '@/validators/actividad'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Tipos from '@/mocks/TipoActividad.json'
 
 const INITIAL_STATE = {
   nombre: '',
@@ -11,7 +12,7 @@ const INITIAL_STATE = {
   puntaje: ''
 }
 
-export function useActividadForm ({ handleModal, action, formState, tipos, idGrupo, idActividad, updateActividades }) {
+export function useActividadForm ({ handleModal, action, formState, idGrupo, idActividad, updateActividades }) {
   const initialState = formState || INITIAL_STATE
 
   const [formData, setFormData] = useState(initialState)
@@ -21,14 +22,13 @@ export function useActividadForm ({ handleModal, action, formState, tipos, idGru
   /* con esto se va a setear bien el valor del select y ya detectara los cambios entre el initialstate y el formdata que actualices */
 
   /* luego en este useEffect seteamos el idCategoria y idNivel del formData en el select */
-  /* useEffect(() => {
+  useEffect(() => {
     if (formState) {
-      const newState = { ...formData }
-      newState.idCategoria = (formState ? categorias.find(categoria => categoria.value === initialState.idCategoria) : formState.idCategoria)
-      newState.idNivel = (formState ? niveles.find(nivel => nivel.value === initialState.idNivel) : formState.idNivel)
-      setFormData(newState)
+      const newFormData = { ...formData }
+      newFormData.tipo = Tipos.find(tipo => tipo.value === initialState.tipo)
+      setFormData(newFormData)
     }
-  }, []) */
+  }, [])
 
   async function handleSubmit (e) {
     e.preventDefault()
