@@ -13,9 +13,9 @@ export async function post (formData, setPending, handleModal, updateActividades
   } catch (error) {
     console.log(error)
     if (error.message === 'ER_DUP_ENTRY') {
-      toast.error('Ya hay un grupo con ese curso activo')
+      toast.error('Ya hay una actividad con ese curso activo')
     } else {
-      toast.error('Error al crear el grupo, intenta más tarde')
+      toast.error('Error al crear la actividad, intenta más tarde')
     }
   } finally {
     setPending(false)

@@ -4,10 +4,15 @@ import { PageOptions } from '../shared/PageOptions'
 import { EntregasAsignacionesDocente } from './EntregasAsignacionesDocente'
 import { Actividad } from '../modals/Actividad'
 import { formatDateTimeToInput } from '@/helpers/Date'
+import { useState } from 'react'
 
-export function AsignacionDocente ({ asignacion, entregas }) {
+export function AsignacionDocente ({ initialAsignacion, entregas }) {
   const { handleModal: handleModalEditarAsignacion, modal: modalEditarAsignacion } = useModal()
-  console.log(asignacion)
+  const [asignacion, setAsignacion] = useState(initialAsignacion)
+
+  function updateAsignacion (newAsignacion) {
+    setAsignacion(newAsignacion)
+  }
   return (
     <>
 
@@ -26,10 +31,15 @@ export function AsignacionDocente ({ asignacion, entregas }) {
             formTitle='Editar Asignación'
             handleModal={handleModalEditarAsignacion}
             submitText='Actualizar'
-            updateActividades={null}
+            updateActividad={updateAsignacion}
+            idActividad={asignacion.idActividad}
             formState={{
-              ...asignacion,
-              fecha_cierre: formatDateTimeToInput(asignacion.fecha_cierre)
+              nombre: asignacion.nombre,
+              tipo: asignacion.tipo,
+              indicaciones: asignacion.indicaciones,
+              puntaje: asignacion.puntaje,
+              fecha_cierre: formatDateTimeToInput(asignacion.fecha_cierre),
+              extemporaneo: asignacion.extemporaneo
             }}
 
           />

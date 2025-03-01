@@ -16,7 +16,7 @@ export function getDeadline (date) {
     'Diciembre'
   ]
 
-  const mes = meses[date.getMonth() + 1]
+  const mes = meses[date.getMonth()]
   const horas = date.getHours()
   const minutos = date.getMinutes()
 

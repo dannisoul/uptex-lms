@@ -1,4 +1,5 @@
 import { getConnection } from '@/db/connection'
+import { dynamicQuery } from '@/helpers/models/dynamicQuery'
 // import { dynamicQuery } from '@/helpers/models/dynamicQuery'
 
 export class Actividad {
@@ -56,6 +57,22 @@ export class Actividad {
     } catch (error) {
       console.log(error)
       return { error: true, errorCode: error.code, actividad: null }
+    } finally {
+      if (connection) connection.release()
+    }
+  }
+
+  static async actualizarActividad (idActividad, ...fields) {
+    let connection = null
+    try {
+      connection = await getConnection()
+      const { sql, values } = dynamicQuery(fields, 'actividad', 'idActividad', idActividad)
+      const [result] = await connection.execute(sql, values)
+      const [actividad] = await connection.execute('SELECT * FROM actividad WHERE idActividad = ?', [idActividad])
+      return { error: false, errorCode: null, affectedRows: result.affectedRows, editedRecord: actividad[0] }
+    } catch (error) {
+      console.log(error)
+      return { error: true, errorCode: error.code, affectedRows: 0, editedRecord: null }
     } finally {
       if (connection) connection.release()
     }

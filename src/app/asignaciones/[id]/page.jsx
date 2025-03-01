@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth'
 export default async function AsignacionPage ({ params }) {
   const { user } = await getServerSession(authOptions)
   const { actividad } = await actividadPorId(params.id)
+  console.log(actividad, 'actividad')
 
   return (
     <main className='customSection max-w-[1200px] w-11/12 mx-auto pt-[120px] sm:pt-[150px] mb-16'>
@@ -29,7 +30,7 @@ export default async function AsignacionPage ({ params }) {
 
         {
           user.idRol === 2
-            ? <AsignacionDocente asignacion={actividad} />
+            ? <AsignacionDocente initialAsignacion={actividad} />
             : <AsignacionAlumno />
 
         }

@@ -7,7 +7,7 @@ import Select from '../forms/Select'
 import { TextArea } from '../forms/TextArea'
 import Tipos from '@/mocks/TipoActividad.json'
 
-export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle, submitText, action, formState }) {
+export function Actividad ({ handleModal, idGrupo, idActividad, updateActividad, updateActividades, formTitle, submitText, action, formState }) {
   const {
     errors,
     formData,
@@ -15,7 +15,7 @@ export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle,
     handleSelectChange,
     handleSubmit,
     pending
-  } = useActividadForm({ idGrupo, action, updateActividades, handleModal, formState })
+  } = useActividadForm({ idGrupo, action, updateActividades, handleModal, formState, idActividad, updateActividad })
 
   return (
     <FormContainer
@@ -73,6 +73,7 @@ export function Actividad ({ handleModal, idGrupo, updateActividades, formTitle,
         labelClassName='text-sm'
         errors={errors.extemporaneo}
         onChange={handleInputChange}
+        checked={formData.extemporaneo}
         value={formData.extemporaneo}
       />
       <InputText

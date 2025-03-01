@@ -63,7 +63,7 @@ export async function put (
     )
     if (response.error) throw new Error(response.errorCode)
     updateCurso(response.editedRecord)
-    toast.success('Curso creado correctamente')
+    toast.success('Curso editado correctamente')
     handleModal()
   } catch (error) {
     console.log(error)

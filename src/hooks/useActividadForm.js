@@ -2,6 +2,7 @@ import { post } from '@/helpers/forms/actividad/post'
 import { validarExtemporaneo, validarFechaCierre, validarIndicaciones, validarNombre, validarPuntaje, validarTipo } from '@/validators/actividad'
 import { useEffect, useState } from 'react'
 import Tipos from '@/mocks/TipoActividad.json'
+import { put } from '@/helpers/forms/actividad/put'
 
 const INITIAL_STATE = {
   nombre: '',
@@ -12,7 +13,7 @@ const INITIAL_STATE = {
   puntaje: ''
 }
 
-export function useActividadForm ({ handleModal, action, formState, idGrupo, idActividad, updateActividades }) {
+export function useActividadForm ({ handleModal, action, formState, idGrupo, idActividad, updateActividad, updateActividades }) {
   const initialState = formState || INITIAL_STATE
 
   const [formData, setFormData] = useState(initialState)
@@ -35,7 +36,7 @@ export function useActividadForm ({ handleModal, action, formState, idGrupo, idA
 
     if (checkErrors()) return
     if (action.toLowerCase() === 'post') await post(formData, setPending, handleModal, updateActividades, idGrupo)
-    // if (action.toLowerCase() === 'put') await put(formData, idActividad, idCurso, setPending, handleModal, toast, updateCurso, initialState)
+    if (action.toLowerCase() === 'put') await put(formData, idActividad, setPending, handleModal, updateActividad, initialState)
   }
 
   function handleInputChange (e) {

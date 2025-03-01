@@ -1,6 +1,6 @@
 import { useModal } from '@/hooks/useModal'
 import { ButtonIcon } from '../shared/IconButton'
-import { IconEye, IconNotebook, IconTrash } from '@tabler/icons-react'
+import { IconNotebook, IconSettings } from '@tabler/icons-react'
 import { Actividad } from '../modals/Actividad'
 import { useActividades } from '@/hooks/useActividades'
 import { usePaginacion } from '@/hooks/usePaginacion'
@@ -43,7 +43,7 @@ export function AsignacionesGrupo ({ grupo }) {
                 <th className='text-left text-[12px] text-primary-text dark:text-dark-primary-text'>ENTREGA</th>
                 <th className='text-left text-[12px] text-primary-text dark:text-dark-primary-text sm:table-cell hidden'>PUNTAJE</th>
                 <th className='text-left text-[12px] text-primary-text dark:text-dark-primary-text lg:table-cell hidden'>EXTEMPORANEO</th>
-                <th className='text-center text-[12px] text-primary-text dark:text-dark-primary-text'>ACCIONES</th>
+                <th className='text-center text-[12px] text-primary-text dark:text-dark-primary-text'>GESTIÓN</th>
               </tr>
             </thead>
             <tbody>
@@ -69,15 +69,14 @@ export function AsignacionesGrupo ({ grupo }) {
                     </td>
                     <td className='text-sm py-2 dark:text-white'>
                       <div className='mx-auto w-fit flex gap-2'>
-                        <ActionButton
+                        {/* <ActionButton
                           icon={<IconTrash />}
                           onClick={() => {
                           }}
-                        />
+                        /> */}
                         <a href={href}>
                           <ActionButton
-                            icon={<IconEye />}
-
+                            icon={<IconSettings />}
                           />
                         </a>
                       </div>

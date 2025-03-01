@@ -1,7 +1,7 @@
-import { AsignacionDocente } from './AsignacionDocente'
+import { EntregasAsignacionAlumno } from './EntregasAsignacionAlumno'
 
 export function AsignacionAlumno ({ entregas }) {
   return (
-    <AsignacionDocente entregas={entregas} />
+    <EntregasAsignacionAlumno />
   )
 }
