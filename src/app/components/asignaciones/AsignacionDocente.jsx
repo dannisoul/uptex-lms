@@ -5,10 +5,22 @@ import { EntregasAsignacionesDocente } from './EntregasAsignacionesDocente'
 import { Actividad } from '../modals/Actividad'
 import { formatDateTimeToInput } from '@/helpers/Date'
 import { useState } from 'react'
+import { usePaginacion } from '@/hooks/usePaginacion'
+import { useEntregas } from '@/hooks/useEntregas'
+import { entregasPorAsignacion } from '@/actions/entrega/entregasPorAsignacion'
+import { FilePreview } from '../shared/FilePreview'
 
-export function AsignacionDocente ({ initialAsignacion, entregas }) {
+export function AsignacionDocente ({ initialAsignacion, idGrupo }) {
   const { handleModal: handleModalEditarAsignacion, modal: modalEditarAsignacion } = useModal()
+  const { handleModal: handleModalPreview, modal: modalPreview } = useModal()
   const [asignacion, setAsignacion] = useState(initialAsignacion)
+  const { entregas, updateEntregas } = useEntregas({ initialState: [] })
+  const { loading, page, totalPage, updatePage } = usePaginacion({ idToFilter: asignacion.idActividad, updateState: updateEntregas, action: entregasPorAsignacion })
+  const [file, setFile] = useState()
+
+  function updateFile (newFile) {
+    setFile(newFile)
+  }
 
   function updateAsignacion (newAsignacion) {
     setAsignacion(newAsignacion)
@@ -23,7 +35,11 @@ export function AsignacionDocente ({ initialAsignacion, entregas }) {
         />
       </div>
 
-      <EntregasAsignacionesDocente entregas={entregas} />
+      {
+        handleModalPreview &&
+          <FilePreview file={file} handleModal={handleModalPreview} />
+      }
+      <EntregasAsignacionesDocente idGrupo={asignacion.idGrupo} entregas={entregas} updateFile={updateFile} />
       {
         modalEditarAsignacion &&
           <Actividad
