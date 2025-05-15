@@ -2,7 +2,8 @@ import { IconCircleCheckFilled, IconDownload, IconEye } from '@tabler/icons-reac
 import { ActionButton } from '../shared/ActionButton'
 import { getDeadline } from '@/helpers/Date'
 
-export function EntregasAsignacionesDocente ({ entregas, idGrupo }) {
+export function EntregasAsignacionesDocente ({ entregas, idGrupo, updateFile, handleView }) {
+  console.log(entregas)
   return (
     <div className='bg-white mt-4 p-6 rounded-lg shadow-lg'>
       <div className='grid grid-cols-4 bg-[#E6E0F7] p-2 text-[#60499F] font-medium rounded-xl text-center'>
@@ -37,7 +38,7 @@ export function EntregasAsignacionesDocente ({ entregas, idGrupo }) {
               <span className='text-primary-accent text-sm font-bold'>Archivos</span>
               <ul className='mt-2 flex flex-col gap-2'>
                 {
-                  entrega.evidencias.map(evidencia => {
+                  entrega.evidencias[0].nombre !== null && entrega.evidencias.map(evidencia => {
                     const path = process.env.NEXT_PUBLIC_FOLDER
                       ? `/api/evidencias?file=${encodeURIComponent(evidencia.nombre)}&idGrupo=${idGrupo}&idAsignacion=${entrega.idActividad}&idEntrega=${entrega.idEntrega}`
                       : `https://storage.googleapis.com/uptex_lms/uploads/grupos/${idGrupo}/${entrega.idActividad}/${entrega.idEntrega}/${evidencia.nombre}`
@@ -54,7 +55,8 @@ export function EntregasAsignacionesDocente ({ entregas, idGrupo }) {
                           </a>
                           <ActionButton
                             onClick={() => {
-
+                              updateFile({ nombre: evidencia.nombre, path, mimeType: evidencia.mimetype })
+                              handleView && handleView()
                             }}
                             icon={<IconEye />}
                           />

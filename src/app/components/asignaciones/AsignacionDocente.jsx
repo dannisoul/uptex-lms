@@ -10,13 +10,13 @@ import { useEntregas } from '@/hooks/useEntregas'
 import { entregasPorAsignacion } from '@/actions/entrega/entregasPorAsignacion'
 import { FilePreview } from '../shared/FilePreview'
 
-export function AsignacionDocente ({ initialAsignacion, idGrupo }) {
+export function AsignacionDocente ({ initialAsignacion }) {
   const { handleModal: handleModalEditarAsignacion, modal: modalEditarAsignacion } = useModal()
   const { handleModal: handleModalPreview, modal: modalPreview } = useModal()
   const [asignacion, setAsignacion] = useState(initialAsignacion)
   const { entregas, updateEntregas } = useEntregas({ initialState: [] })
   const { loading, page, totalPage, updatePage } = usePaginacion({ idToFilter: asignacion.idActividad, updateState: updateEntregas, action: entregasPorAsignacion })
-  const [file, setFile] = useState()
+  const [file, setFile] = useState(null)
 
   function updateFile (newFile) {
     setFile(newFile)
@@ -36,10 +36,10 @@ export function AsignacionDocente ({ initialAsignacion, idGrupo }) {
       </div>
 
       {
-        handleModalPreview &&
+        modalPreview &&
           <FilePreview file={file} handleModal={handleModalPreview} />
       }
-      <EntregasAsignacionesDocente idGrupo={asignacion.idGrupo} entregas={entregas} updateFile={updateFile} />
+      <EntregasAsignacionesDocente idGrupo={asignacion.idGrupo} entregas={entregas} handleView={handleModalPreview} updateFile={updateFile} />
       {
         modalEditarAsignacion &&
           <Actividad

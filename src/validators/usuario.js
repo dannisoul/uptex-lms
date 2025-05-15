@@ -24,7 +24,7 @@ export function validarNacionalidad (nacionalidad) {
   }
 }
 
-export default function validarNacimiento (date) {
+export function validarNacimiento (date) {
   const value = date.trim()
   const age = validateAge(value)
   if (value === '') {
